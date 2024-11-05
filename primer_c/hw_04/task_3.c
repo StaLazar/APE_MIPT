@@ -8,6 +8,7 @@ int main(void) {
     scanf("%d %d %d", &numbers[0], &numbers[1], &numbers[2]);
 
     const size_t count = sizeof(numbers) / sizeof(numbers[0]);
+    max = numbers[0];
     for (size_t i = 0; i < count; ++i) {
         max = (max < numbers[i]) ? numbers[i] : max;
     }

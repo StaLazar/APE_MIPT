@@ -1,4 +1,4 @@
-#include "stdio.h"
+#include <stdio.h>
 
 int main(void) {
     int numbers[2] = {0, 0};

@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+#define BASE_10 10 //!< Основание десятичной системы счисления.
+
 int main(void) {
     int number = 0;
     int sum = 0;
@@ -16,10 +18,9 @@ int main(void) {
     /**
      * @details do-while используется на случай, если ввели 0.
      */
-    const int base = 10;
     do {
-        sum += number % base;
-        number /= base;
+        sum += number % BASE_10;
+        number /= BASE_10;
     } while (number != 0);
 
     printf("\nThe sum of number's digits: %d\n", sum);

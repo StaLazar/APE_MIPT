@@ -3,6 +3,7 @@
 
 int main(void) {
     int numbers[2] = {0, 0};
+    int sum = 0;
     const int edgeNum = 100;
 
     printf("Input 2 integer numbers in ascending order, which are not exceeding modulo %d: ",
@@ -13,17 +14,16 @@ int main(void) {
         printf("Interrupting: the numbers are not in ascending order!\n");
         return 1;
     }
-
     if ((abs(numbers[0]) > edgeNum) || (abs(numbers[1]) > edgeNum)) {
         printf("Interrupting: the numbers are out of range!\n");
         return 2;
     }
 
-    printf("\nThe list of squares in [%d; %d]:\n", numbers[0], numbers[1]);
     for (int number = numbers[0]; number <= numbers[1]; ++number) {
-        printf("%d ", number * number);
+        sum += number * number;
     }
-    printf("\n");
+
+    printf("\nThe sum of squares in [%d; %d]: %d\n", numbers[0], numbers[1], sum);
 
     return 0;
 }

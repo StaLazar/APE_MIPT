@@ -29,8 +29,8 @@ int main(void) {
         number /= BASE_10;
     } while (number != 0);
 
-    printf("\nThe amount of even number's digit: %d\n", evenCount);
-    printf("The amount of odd number's digit: %d\n", oddCount);
+    printf("\nThe amount of even number's digits: %d\n", evenCount);
+    printf("The amount of odd number's digits: %d\n", oddCount);
 
     return 0;
 }

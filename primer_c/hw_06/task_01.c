@@ -8,7 +8,7 @@
  * @param number порядковый номер искомого члена прогрессии.
  * @return Член геометрической прогрессии.
  */
-double getGeomRateMember(int initial, int ratio, int number) {
+double getGeomRateMember(const int initial, const int ratio, const int number) {
     return initial * pow(ratio, number - 1);
 }
 

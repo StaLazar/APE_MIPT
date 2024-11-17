@@ -11,12 +11,14 @@ int convertFromDecToAny(int number, int base) {
     int result = 0;
     const int posBase = 10;
     int posPower = 0;
+
     while (number >= base) {
         result += (number % base) * pow(posBase, posPower);
         number /= base;
         ++posPower;
     }
     result += number * pow(posBase, posPower);
+
     return result;
 }
 

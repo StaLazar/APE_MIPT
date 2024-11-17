@@ -3,9 +3,9 @@
 
 /**
  * @brief Получить член геометрической прогресии.
- * @param initial первый член прогрессии.
- * @param ratio знаменатель прогрессии.
- * @param number порядковый номер искомого члена прогрессии.
+ * @param initial Первый член прогрессии.
+ * @param ratio Знаменатель прогрессии.
+ * @param number Порядковый номер искомого члена прогрессии.
  * @return Член геометрической прогрессии.
  */
 double getGeomRateMember(const int initial, const int ratio, const int number) {

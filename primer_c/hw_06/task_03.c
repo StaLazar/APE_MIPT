@@ -2,7 +2,7 @@
 #include <stdbool.h>
 #include <math.h>
 
-#define PI 3.1416f
+#define PI 3.1416f //!< Число Пи с точностью до 4 знака.
 
 /**
  * @brief Перевести значение из градусов в радианы.

@@ -45,7 +45,7 @@ void printArray(const int *array, const size_t size) {
 }
 
 int main(void) {
-    const size_t size = 10;
+    const size_t size = 12;
     int numArray[size];
 
     printf("Input a list of %ld integer numbers:\n", size);
@@ -53,7 +53,7 @@ int main(void) {
         scanf("%d", &numArray[i]);
     }
 
-    const int shift = 1;
+    const int shift = 4;
     shiftArrayToRight(numArray, size, shift);
 
     printf("\nThe list, shifted to the right by %d element(s):\n", shift);

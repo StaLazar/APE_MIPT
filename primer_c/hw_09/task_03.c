@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdbool.h>
 
 //! Размер квадратной матрицы.
 #define SQ_MATRIX_SIZE 5

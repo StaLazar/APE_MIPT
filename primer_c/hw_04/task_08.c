@@ -3,13 +3,13 @@
 /**
  * @brief Геометрическая точка с целочисленными координатами.
  */
-struct point {
+typedef struct {
     int x;
     int y;
-};
+} Point;
 
 int main(void) {
-    struct point points[2] = {{0, 0}, {0, 0}};
+    Point points[2] = {{0, 0}, {0, 0}};
     float angularCoef = 0.f;
     float yAxisCoef = 0.f;
 

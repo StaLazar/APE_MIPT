@@ -4,7 +4,7 @@
 #include <string.h>
 
 //! Вместимость строки, хранящейся в файле.
-#define FILE_LINE_CAPACITY 1000
+#define FILE_LINE_CAPACITY 1100
 
 /**
  * @brief Прочитать строку из файла.
@@ -65,7 +65,7 @@ bool writeFileLine(const char *path, const char *line) {
  */
 bool moveFileLineLeft(char line[FILE_LINE_CAPACITY], const size_t pos, const size_t shift) {
     if (pos >= FILE_LINE_CAPACITY) {
-        printf("moveFileLineLeft: invalid initial position\n");
+        printf("moveFileLineLeft: Invalid initial position\n");
         return false;
     }
     if (shift == 0) {
@@ -73,7 +73,7 @@ bool moveFileLineLeft(char line[FILE_LINE_CAPACITY], const size_t pos, const siz
     }
     const size_t begin = pos - shift;
     if (begin < 0) {
-        printf("moveFileLineLeft: unacceptable line shift\n");
+        printf("moveFileLineLeft: Unacceptable line shift\n");
         return false;
     }
 
@@ -95,7 +95,7 @@ bool moveFileLineLeft(char line[FILE_LINE_CAPACITY], const size_t pos, const siz
  */
 bool moveFileLineRight(char line[FILE_LINE_CAPACITY], const size_t pos, const size_t shift) {
     if (pos >= FILE_LINE_CAPACITY) {
-        printf("moveFileLineRight: invalid initial position\n");
+        printf("moveFileLineRight: Invalid initial position\n");
         return false;
     }
     if (shift == 0) {
@@ -103,7 +103,7 @@ bool moveFileLineRight(char line[FILE_LINE_CAPACITY], const size_t pos, const si
     }
     const size_t end = strlen(line) + shift;
     if (end >= FILE_LINE_CAPACITY) {
-        printf("moveFileLineRight: unacceptable line shift\n");
+        printf("moveFileLineRight: Unacceptable line shift\n");
         return false;
     }
 
@@ -121,26 +121,33 @@ bool moveFileLineRight(char line[FILE_LINE_CAPACITY], const size_t pos, const si
  * @param line Строка, в которой будет произведена замена.
  * @param rep Заменяемая подстрока.
  * @param sub Заменяющая подстрока.
+ * @return true - замена прошла успешно, false - иначе.
  */
-void replaceFileLine(char line[FILE_LINE_CAPACITY], const char *rep, const char *sub) {
+bool replaceFileLine(char line[FILE_LINE_CAPACITY], const char *rep, const char *sub) {
     for (char *ptr = strstr(line, rep); ptr; ptr = strstr(line, rep)) {
         const size_t repBegin = ptr - line;
         const size_t repEnd = repBegin + strlen(rep);
         const int difference = strlen(rep) - strlen(sub);
         if (difference < 0) {
-            moveFileLineRight(line, repEnd, abs(difference));
+            if (!moveFileLineRight(line, repEnd, abs(difference))) {
+                return false;
+            };
         } else if (difference > 0) {
-            moveFileLineLeft(line, repEnd, abs(difference));
+            if (!moveFileLineLeft(line, repEnd, abs(difference))) {
+                return false;
+            };
         }
         for (size_t i = repBegin, j = 0; j < strlen(sub); ++i, ++j) {
             line[i] = *(sub + j);
         }
     }
+    return true;
 }
 
 int main(void) {
     const char *inputPath = "input.txt";
     char fileLine[FILE_LINE_CAPACITY];
+    memset(fileLine, 0, FILE_LINE_CAPACITY);
     if (!readFileLine(inputPath, fileLine)) {
         return 1;
     }
@@ -148,10 +155,12 @@ int main(void) {
     const char *outputPath = "output.txt";
     const char *replaceable = "Cao";
     const char *substitute = "Ling";
-    replaceFileLine(fileLine, replaceable, substitute);
+    if (!replaceFileLine(fileLine, replaceable, substitute)) {
+        return 2;
+    };
 
     if (!writeFileLine(outputPath, fileLine)) {
-        return 2;
+        return 3;
     };
 
     return 0;

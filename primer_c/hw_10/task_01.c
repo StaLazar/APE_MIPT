@@ -73,6 +73,7 @@ bool isPalindrome(const char line[FILE_LINE_CAPACITY]) {
 int main(void) {
     const char *inputPath = "input.txt";
     char inputLine[FILE_LINE_CAPACITY];
+    memset(inputLine, 0, FILE_LINE_CAPACITY);
     if (!readFileLine(inputPath, inputLine)) {
         return 1;
     }

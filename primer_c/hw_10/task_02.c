@@ -105,6 +105,7 @@ bool changeExtension(char line[FILE_LINE_CAPACITY], const char extension[FILE_EX
 int main(void) {
     const char *inputPath = "input.txt";
     char fileLine[FILE_LINE_CAPACITY];
+    memset(fileLine, 0, FILE_LINE_CAPACITY);
     if (!readFileLine(inputPath, fileLine)) {
         return 1;
     }

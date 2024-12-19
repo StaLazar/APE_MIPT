@@ -21,7 +21,8 @@ bool readFileLine(const char *path, char *line) {
     if (fscanf(file, "%[^\n]", line) == EOF) {
         printf("readFileLine: No data to read\n");
         return false;
-    } else if (ferror(file)) {
+    }
+    if (ferror(file)) {
         perror("readFileLine");
         return false;
     }
@@ -46,7 +47,8 @@ bool writeFileLine(const char *path, const char *line) {
     if (fprintf(file, "%s\n", line) < 0) {
         printf("writeFileLine: Data recording error\n");
         return false;
-    } else if (ferror(file)) {
+    }
+    if (ferror(file)) {
         perror("writeFileLine");
         return false;
     }

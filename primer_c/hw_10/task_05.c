@@ -70,7 +70,7 @@ char getCharByDigit(const size_t digit) {
 }
 
 /**
- * @brief Записать в строку output полный Soundex-код строки input, начиная со второго символа.
+ * @brief Записать в строку output полный Soundex-код строки input.
  * @attention Строка input должна состоять из строчных латинских букв.
  * @param input Строка, по которой будет составлен Soundex-код.
  * @param output Строка, куда будет записан полученный Soundex-код.
@@ -79,6 +79,7 @@ void encodeSdxAlpha(char input[FILE_LINE_CAPACITY], char output[FILE_LINE_CAPACI
     static const char *codeTable[] = {"", "bfpv", "cgjkqsxz", "dt", "l", "mn", "r"};
     static const size_t codeTableSize = sizeof(codeTable) / sizeof(char *);
 
+    output[0] = input[0];
     for (size_t inIdx = 1, outIdx = 1; (inIdx < strlen(input)) && (outIdx < FILE_LINE_CAPACITY); ++inIdx) {
         for (size_t typeIdx = 1; typeIdx < codeTableSize; ++typeIdx) {
             if (strchr(codeTable[typeIdx], input[inIdx])) {
@@ -130,7 +131,6 @@ void trimSdxCode(char line[FILE_LINE_CAPACITY]) {
  * @param output Строка, куда будет записан полученный Soundex-код.
  */
 void generateSoundexCode(char input[FILE_LINE_CAPACITY], char output[FILE_LINE_CAPACITY]) {
-    output[0] = input[0];
     encodeSdxAlpha(input, output);
     replaceSdxCopies(output);
     trimSdxCode(output);

@@ -4,16 +4,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-/**
- * @brief Время записи данных с датчика температуры.
- */
-typedef struct {
-    uint16_t year; //!< Год.
-    uint8_t month; //!< Месяц.
-    uint8_t day; //!< День.
-    uint8_t hour; //!< Час.
-    uint8_t minute; //!< Минута.
-} temp_time;
+#include "common/timestamp.h"
 
 /**
  * @brief Значение температуры, полученное от датчика.
@@ -27,7 +18,7 @@ typedef struct {
  * @brief Данные с датчика температуры.
  */
 typedef struct {
-    temp_time time; //!< Время записи.
+    timestamp timestamp; //!< Временная метка.
     temp_record record; //!< Значение.
 } temp_data;
 
@@ -35,64 +26,64 @@ typedef struct {
  * @brief Получить значение среднемесячной температуры.
  * @param records Массив данных с датчика температуры.
  * @param size Размер массива данных с датчика температуры.
- * @param time Структура времени, год и месяц которой определяют
+ * @param timestamp Временная метка, год и месяц которой определяют
  * область поиска значения среднемесячной температуры.
  * @return Достоверное значение температуры, если в массиве данных есть
  * хотя бы одна запись в указанной временной области, а иначе - недостоверное.
  */
-temp_record getAverMonthTemp(const temp_data *records, size_t size, temp_time time);
+temp_record getAverMonthTemp(const temp_data *records, size_t size, timestamp timestamp);
 
 /**
  * @brief Получить значение минимальной месячной температуры.
  * @param records Массив данных с датчика температуры.
  * @param size Размер массива данных с датчика температуры.
- * @param time Структура времени, год и месяц которой определяют
+ * @param timestamp Временная метка, год и месяц которой определяют
  * область поиска значения минимальной месячной температуры.
  * @return Достоверное значение температуры, если в массиве данных есть
  * хотя бы одна запись в указанной временной области, а иначе - недостоверное.
  */
-temp_record getMinMonthTemp(const temp_data *records, size_t size, temp_time time);
+temp_record getMinMonthTemp(const temp_data *records, size_t size, timestamp timestamp);
 
 /**
  * @brief Получить значение максимальной месячной температуры.
  * @param records Массив данных с датчика температуры.
  * @param size Размер массива данных с датчика температуры.
- * @param time Структура времени, год и месяц которой определяют
+ * @param timestamp Временная метка, год и месяц которой определяют
  * область поиска значения максимальной месячной температуры.
  * @return Достоверное значение температуры, если в массиве данных есть
  * хотя бы одна запись в указанной временной области, а иначе - недостоверное.
  */
-temp_record getMaxMonthTemp(const temp_data *records, size_t size, temp_time time);
+temp_record getMaxMonthTemp(const temp_data *records, size_t size, timestamp timestamp);
 
 /**
  * @brief Получить значение среднегодовой температуры.
  * @param records Массив данных с датчика температуры.
  * @param size Размер массива данных с датчика температуры.
- * @param time Структура времени, год которой определяет
+ * @param timestamp Временная метка, год которой определяет
  * область поиска значения среднегодовой температуры.
  * @return Достоверное значение температуры, если в массиве данных есть
  * хотя бы одна запись в указанной временной области, а иначе - недостоверное.
  */
-temp_record getAverAnnualTemp(const temp_data *records, size_t size, temp_time time);
+temp_record getAverAnnualTemp(const temp_data *records, size_t size, timestamp timestamp);
 
 /**
  * @brief Получить значение минимальной годовой температуры.
  * @param records Массив данных с датчика температуры.
  * @param size Размер массива данных с датчика температуры.
- * @param time Структура времени, год которой определяет
+ * @param timestamp Временная метка, год которой определяет
  * область поиска значения минимальной годовой температуры.
  * @return Достоверное значение температуры, если в массиве данных есть
  * хотя бы одна запись в указанной временной области, а иначе - недостоверное.
  */
-temp_record getMinAnnualTemp(const temp_data *records, size_t size, temp_time time);
+temp_record getMinAnnualTemp(const temp_data *records, size_t size, timestamp timestamp);
 
 /**
  * @brief Получить значение максимальной годовой температуры.
  * @param records Массив данных с датчика температуры.
  * @param size Размер массива данных с датчика температуры.
- * @param time Структура времени, год которой определяет
+ * @param timestamp Временная метка, год которой определяет
  * область поиска значения максимальной годовой температуры.
  * @return Достоверное значение максимальной годовой температуры, если в массиве данных
  * есть хотя бы одна запись в указанной временной области, а иначе - недостоверное.
  */
-temp_record getMaxAnnualTemp(const temp_data *records, size_t size, temp_time time);
+temp_record getMaxAnnualTemp(const temp_data *records, size_t size, timestamp timestamp);

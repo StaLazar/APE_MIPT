@@ -5,10 +5,12 @@ add_executable(${PROJECT_NAME}
     ${PROJECT_SOURCE_DIR}/main.c
 )
 
+add_subdirectory(common)
 add_subdirectory(sensors)
 add_subdirectory(tools)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
+    common
     sensors
     tools
 )

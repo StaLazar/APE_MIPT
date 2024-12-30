@@ -21,3 +21,13 @@ typedef struct {
  * @return true - временная метка достоверна, false - иначе.
  */
 bool isTimestampValid(const timestamp *timestamp);
+
+/**
+ * @brief Сравнить хронологически две временные метки.
+ * @param first Первая временная метка.
+ * @param second Вторая временная метка.
+ * @return Отрицательное число, если first < second.
+ * Нуль, если first == second.
+ * Положительное число, если first > second.
+ */
+int compareTimestamps(const timestamp *first, const timestamp *second);

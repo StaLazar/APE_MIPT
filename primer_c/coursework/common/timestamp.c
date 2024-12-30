@@ -161,3 +161,22 @@ bool isTimestampValid(const timestamp *timestamp) {
             isDayValid(timestamp) && isHourValid(timestamp) &&
             isMinuteValid(timestamp));
 }
+
+int compareTimestamps(const timestamp *first, const timestamp *second) {
+    if (first->year != second->year) {
+        return (int)(first->year - second->year);
+    }
+    if (first->month != second->month) {
+        return (int)(first->month - second->month);
+    }
+    if (first->day != second->day) {
+        return (int)(first->day - second->day);
+    }
+    if (first->hour != second->hour) {
+        return (int)(first->hour - second->hour);
+    }
+    if (first->minute != second->minute) {
+        return (int)(first->minute - second->minute);
+    }
+    return 0;
+}

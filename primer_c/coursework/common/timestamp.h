@@ -20,7 +20,8 @@ typedef struct {
  * @ingroup common
  * @brief Определить достоверность временной метки.
  * @param timestamp Временная метка.
- * @return true - временная метка достоверна, false - иначе.
+ * @retval true - временная метка достоверна.
+ * @retval false - временная метка недостоверна.
  */
 bool isTimestampValid(const timestamp *timestamp);
 
@@ -29,8 +30,8 @@ bool isTimestampValid(const timestamp *timestamp);
  * @brief Сравнить хронологически две временные метки.
  * @param first Первая временная метка.
  * @param second Вторая временная метка.
- * @return Отрицательное число, если first < second.
- * Нуль, если first == second.
- * Положительное число, если first > second.
+ * @retval Отрицательное число, если first < second.
+ * @retval Нуль, если first = second.
+ * @retval Положительное число, если first > second.
  */
 int compareTimestamps(const timestamp *first, const timestamp *second);

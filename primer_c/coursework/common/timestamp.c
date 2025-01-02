@@ -64,33 +64,10 @@ static uint16_t getCurrentYear() {
 }
 
 /**
- * @brief Определить достоверность года временной метки.
- * @param timestamp Временная метка, год которой подлежит проверке.
- * @return true - год временной метки достоверен, false - иначе.
- */
-static bool isYearValid(const timestamp *timestamp) {
-    if ((BASE_YEAR <= timestamp->year) && (timestamp->year <= getCurrentYear())) {
-        return true;
-    }
-    return false;
-}
-
-/**
- * @brief Определить достоверность месяца временной метки.
- * @param timestamp Временная метка, месяц которой подлежит проверке.
- * @return true - месяц временной метки достоверен, false - иначе.
- */
-static bool isMonthValid(const timestamp *timestamp) {
-    if ((MIN_MONTH <= timestamp->month) && (timestamp->month <= MAX_MONTH)) {
-        return true;
-    }
-    return false;
-}
-
-/**
  * @brief Определить, является ли год високосным.
  * @param year Год, подлежащий проверке.
- * @return true - год является високосным, false - иначе.
+ * @retval true - год является високосным.
+ * @retval false - год не является високосным.
  */
 static bool isLeapYear(const uint16_t year) {
     if (year % 400U == 0U) {
@@ -106,9 +83,36 @@ static bool isLeapYear(const uint16_t year) {
 }
 
 /**
+ * @brief Определить достоверность года временной метки.
+ * @param timestamp Временная метка, год которой подлежит проверке.
+ * @retval true - год временной метки достоверен.
+ * @retval false - год временной метки недостоверен.
+ */
+static bool isYearValid(const timestamp *timestamp) {
+    if ((BASE_YEAR <= timestamp->year) && (timestamp->year <= getCurrentYear())) {
+        return true;
+    }
+    return false;
+}
+
+/**
+ * @brief Определить достоверность месяца временной метки.
+ * @param timestamp Временная метка, месяц которой подлежит проверке.
+ * @retval true - месяц временной метки достоверен.
+ * @retval false - месяц временной метки недостоверен.
+ */
+static bool isMonthValid(const timestamp *timestamp) {
+    if ((MIN_MONTH <= timestamp->month) && (timestamp->month <= MAX_MONTH)) {
+        return true;
+    }
+    return false;
+}
+
+/**
  * @brief Определить достоверность дня временной метки.
  * @param timestamp Временная метка, день которой подлежит проверке.
- * @return true - день временной метки достоверен, false - иначе.
+ * @retval true - день временной метки достоверен.
+ * @retval false - день временной метки недостоверен.
  */
 static bool isDayValid(const timestamp *timestamp) {
     switch (timestamp->month) {
@@ -135,7 +139,8 @@ static bool isDayValid(const timestamp *timestamp) {
 /**
  * @brief Определить достоверность часа временной метки.
  * @param timestamp Временная метка, час которой подлежит проверке.
- * @return true - час временной метки достоверен, false - иначе.
+ * @retval true - час временной метки достоверен.
+ * @retval false - час временной метки недостоверен.
  */
 static bool isHourValid(const timestamp *timestamp) {
     if ((MIN_HOUR <= timestamp->hour) && (timestamp->hour <= MAX_HOUR)) {
@@ -147,7 +152,8 @@ static bool isHourValid(const timestamp *timestamp) {
 /**
  * @brief Определить достоверность минут временной метки.
  * @param timestamp Временная метка, минуты которой подлежат проверке.
- * @return true - минуты временной метки достоверны, false - иначе.
+ * @retval true - минуты временной метки достоверны.
+ * @retval false - минуты временной метки недостоверны.
  */
 static bool isMinuteValid(const timestamp *timestamp) {
     if ((MIN_MINUTE <= timestamp->minute) && (timestamp->minute <= MAX_MINUTE)) {

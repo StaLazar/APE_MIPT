@@ -5,6 +5,7 @@
 #include <stdbool.h>
 
 /**
+ * @ingroup common
  * @brief Временная метка.
  */
 typedef struct {
@@ -16,6 +17,7 @@ typedef struct {
 } timestamp;
 
 /**
+ * @ingroup common
  * @brief Определить достоверность временной метки.
  * @param timestamp Временная метка.
  * @return true - временная метка достоверна, false - иначе.
@@ -23,6 +25,7 @@ typedef struct {
 bool isTimestampValid(const timestamp *timestamp);
 
 /**
+ * @ingroup common
  * @brief Сравнить хронологически две временные метки.
  * @param first Первая временная метка.
  * @param second Вторая временная метка.

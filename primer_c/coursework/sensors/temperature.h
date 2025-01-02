@@ -7,7 +7,8 @@
 #include "common/timestamp.h"
 
 /**
- * @brief Значение температуры, полученное от датчика.
+ * @ingroup sensors
+ * @brief Значение температуры с достоверностью.
  */
 typedef struct {
     int8_t value; //!< Значение.
@@ -15,6 +16,7 @@ typedef struct {
 } temp_record;
 
 /**
+ * @ingroup sensors
  * @brief Данные с датчика температуры.
  */
 typedef struct {
@@ -23,6 +25,7 @@ typedef struct {
 } temp_data;
 
 /**
+ * @ingroup sensors
  * @brief Получить значение среднемесячной температуры.
  * @param records Массив данных с датчика температуры.
  * @param size Размер массива данных с датчика температуры.
@@ -34,6 +37,7 @@ typedef struct {
 temp_record getAverMonthTemp(const temp_data *records, size_t size, timestamp timestamp);
 
 /**
+ * @ingroup sensors
  * @brief Получить значение минимальной месячной температуры.
  * @param records Массив данных с датчика температуры.
  * @param size Размер массива данных с датчика температуры.
@@ -45,6 +49,7 @@ temp_record getAverMonthTemp(const temp_data *records, size_t size, timestamp ti
 temp_record getMinMonthTemp(const temp_data *records, size_t size, timestamp timestamp);
 
 /**
+ * @ingroup sensors
  * @brief Получить значение максимальной месячной температуры.
  * @param records Массив данных с датчика температуры.
  * @param size Размер массива данных с датчика температуры.
@@ -56,6 +61,7 @@ temp_record getMinMonthTemp(const temp_data *records, size_t size, timestamp tim
 temp_record getMaxMonthTemp(const temp_data *records, size_t size, timestamp timestamp);
 
 /**
+ * @ingroup sensors
  * @brief Получить значение среднегодовой температуры.
  * @param records Массив данных с датчика температуры.
  * @param size Размер массива данных с датчика температуры.
@@ -67,6 +73,7 @@ temp_record getMaxMonthTemp(const temp_data *records, size_t size, timestamp tim
 temp_record getAverAnnualTemp(const temp_data *records, size_t size, timestamp timestamp);
 
 /**
+ * @ingroup sensors
  * @brief Получить значение минимальной годовой температуры.
  * @param records Массив данных с датчика температуры.
  * @param size Размер массива данных с датчика температуры.
@@ -78,6 +85,7 @@ temp_record getAverAnnualTemp(const temp_data *records, size_t size, timestamp t
 temp_record getMinAnnualTemp(const temp_data *records, size_t size, timestamp timestamp);
 
 /**
+ * @ingroup sensors
  * @brief Получить значение максимальной годовой температуры.
  * @param records Массив данных с датчика температуры.
  * @param size Размер массива данных с датчика температуры.

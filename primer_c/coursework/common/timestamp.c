@@ -1,6 +1,5 @@
-#include <time.h>
-
 #include "timestamp.h"
+#include <time.h>
 
 //! Год, с которого начинается отсчет лет.
 #define BASE_YEAR 1900U

@@ -1,4 +1,5 @@
 #include "timestamp.h"
+
 #include <time.h>
 
 //! Год, с которого начинается отсчет лет.

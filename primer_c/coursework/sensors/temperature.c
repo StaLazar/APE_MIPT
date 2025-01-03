@@ -1,6 +1,6 @@
 #include "temperature.h"
 
-temp_record getAverMonthTemp(const temp_data *records, const size_t size, const timestamp timestamp) {
+temp_record getAverMonthTemp(const vector *records, const timestamp *timestamp) {
     temp_record result = {0, false};
     /**
      * @todo Добавить реализацию.
@@ -8,7 +8,7 @@ temp_record getAverMonthTemp(const temp_data *records, const size_t size, const 
     return result;
 }
 
-temp_record getMinMonthTemp(const temp_data *records, const size_t size, const timestamp timestamp) {
+temp_record getMinMonthTemp(const vector *records, const timestamp *timestamp) {
     temp_record result = {0, false};
     /**
      * @todo Добавить реализацию.
@@ -16,7 +16,7 @@ temp_record getMinMonthTemp(const temp_data *records, const size_t size, const t
     return result;
 }
 
-temp_record getMaxMonthTemp(const temp_data *records, const size_t size, const timestamp timestamp) {
+temp_record getMaxMonthTemp(const vector *records, const timestamp *timestamp) {
     temp_record result = {0, false};
     /**
      * @todo Добавить реализацию.
@@ -24,7 +24,7 @@ temp_record getMaxMonthTemp(const temp_data *records, const size_t size, const t
     return result;
 }
 
-temp_record getAverAnnualTemp(const temp_data *records, const size_t size, const timestamp timestamp) {
+temp_record getAverAnnualTemp(const vector *records, const timestamp *timestamp) {
     temp_record result = {0, false};
     /**
      * @todo Добавить реализацию.
@@ -32,7 +32,7 @@ temp_record getAverAnnualTemp(const temp_data *records, const size_t size, const
     return result;
 }
 
-temp_record getMinAnnualTemp(const temp_data *records, const size_t size, const timestamp timestamp) {
+temp_record getMinAnnualTemp(const vector *records, const timestamp *timestamp) {
     temp_record result = {0, false};
     /**
      * @todo Добавить реализацию.
@@ -40,7 +40,7 @@ temp_record getMinAnnualTemp(const temp_data *records, const size_t size, const 
     return result;
 }
 
-temp_record getMaxAnnualTemp(const temp_data *records, const size_t size, const timestamp timestamp) {
+temp_record getMaxAnnualTemp(const vector *records, const timestamp *timestamp) {
     temp_record result = {0, false};
     /**
      * @todo Добавить реализацию.

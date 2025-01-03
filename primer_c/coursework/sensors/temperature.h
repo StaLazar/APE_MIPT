@@ -27,6 +27,22 @@ typedef struct {
 
 /**
  * @ingroup sensors
+ * @brief Отсортировать массив данных с датчика
+ * температуры по временной метке.
+ * @param records Массив данных с датчика температуры.
+ */
+void qsortTempByTimestamp(vector *records);
+
+/**
+ * @ingroup sensors
+ * @brief Отсортировать массив данных с датчика
+ * температуры по значению температуры.
+ * @param records Массив данных с датчика температуры.
+ */
+void qsortTempByRecord(vector *records);
+
+/**
+ * @ingroup sensors
  * @brief Получить значение среднемесячной температуры.
  * @param records Массив данных с датчика температуры.
  * @param timestamp Указатель на временную метку, год и месяц которой определяют

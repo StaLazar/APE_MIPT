@@ -2,6 +2,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
 //! Коэффициент роста вместимости вектора.
 #define CAPACITY_GROW_FACTOR 1.5F
@@ -13,11 +14,14 @@
  * @param vec Указатель на вектор.
  */
 static void resizeVector(vector *vec) {
-    vec->capacity = (size_t)(vec->capacity * CAPACITY_GROW_FACTOR);
+    vec->capacity = (size_t) ceil(vec->capacity * CAPACITY_GROW_FACTOR);
     vec->data = (void **) realloc(vec->data, vec->capacity * sizeof(void *));
 }
 
 bool initVector(vector *vec, const size_t typeSize, const size_t capacity) {
+    if ((typeSize == 0U) || (capacity == 0U)) {
+        return false;
+    }
     vec->data = (void **) malloc(capacity * sizeof(void *));
     if (vec->data != NULL) {
         vec->typeSize = typeSize;
@@ -76,4 +80,8 @@ bool isVectorEmpty(const vector *vec) {
 
 size_t getVectorSize(const vector *vec) {
     return vec->size;
+}
+
+void qsortVector(vector *vec, vector_cmp *comparator) {
+    qsort(vec->data, vec->size, sizeof(void *), comparator);
 }

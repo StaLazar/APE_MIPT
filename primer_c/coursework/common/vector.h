@@ -3,6 +3,9 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+//! Тип функции сравнения элементов вектора.
+typedef int (vector_cmp)(const void *, const void *);
+
 /**
  * @ingroup common
  * @brief Контейнер типа "Вектор".
@@ -77,3 +80,13 @@ bool isVectorEmpty(const vector *vec);
  * @return Размер вектора.
  */
 size_t getVectorSize(const vector *vec);
+
+/**
+ * @ingroup common
+ * @brief Отсортировать вектор.
+ * @details Для сортировки используется функция qsort()
+ * стандартной библиотеки C.
+ * @param vec Указатель на вектор.
+ * @param comparator Указатель на функцию сравнения элементов вектора.
+ */
+void qsortVector(vector *vec, vector_cmp *comparator);

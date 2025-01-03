@@ -168,7 +168,7 @@ bool isTimestampValid(const timestamp *timestamp) {
             isMinuteValid(timestamp));
 }
 
-int compareTimestamps(const timestamp *first, const timestamp *second) {
+int cmpTimestamps(const timestamp *first, const timestamp *second) {
     if (first->year != second->year) {
         return (int)(first->year - second->year);
     }

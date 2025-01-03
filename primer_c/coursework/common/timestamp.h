@@ -34,4 +34,4 @@ bool isTimestampValid(const timestamp *timestamp);
  * @retval Нуль, если first = second.
  * @retval Положительное число, если first > second.
  */
-int compareTimestamps(const timestamp *first, const timestamp *second);
+int cmpTimestamps(const timestamp *first, const timestamp *second);

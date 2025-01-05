@@ -3,11 +3,15 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+/**
+ * @ingroup common
+ * @{
+ */
+
 //! Тип функции сравнения элементов вектора.
 typedef int (vector_cmp)(const void *, const void *);
 
 /**
- * @ingroup common
  * @brief Контейнер типа "Вектор".
  * @details Представляет собой усеченный аналог std::vector из C++,
  * т.е. коллекцию переменного размера произвольного типа данных
@@ -21,7 +25,6 @@ typedef struct {
 } vector;
 
 /**
- * @ingroup common
  * @brief Инициализировать вектор.
  * @param vec Указатель на инициализируемый вектор.
  * @param typeSize Размер хранимого в векторе элемента в байтах.
@@ -32,14 +35,12 @@ typedef struct {
 bool initVector(vector *vec, size_t typeSize, size_t capacity);
 
 /**
- * @ingroup common
  * @brief Очистить вектор.
  * @param vec Указатель на очищаемый вектор.
  */
 void clearVector(vector *vec);
 
 /**
- * @ingroup common
  * @brief Добавить элемент в конец вектора.
  * @param vec Указатель на вектор.
  * @param data Элемент, добавляемый в конец вектора.
@@ -47,7 +48,6 @@ void clearVector(vector *vec);
 void addVectorElement(vector *vec, void *data);
 
 /**
- * @ingroup common
  * @brief Удалить элемент из вектора.
  * @param vec Указатель на вектор.
  * @param idx Индекс удаляемого элемента.
@@ -55,7 +55,6 @@ void addVectorElement(vector *vec, void *data);
 void delVectorElement(vector *vec, size_t idx);
 
 /**
- * @ingroup common
  * @brief Получить элемент вектора.
  * @param vec Указатель на вектор.
  * @param idx Индекс элемента.
@@ -65,7 +64,6 @@ void delVectorElement(vector *vec, size_t idx);
 void *getVectorElement(const vector *vec, size_t idx);
 
 /**
- * @ingroup common
  * @brief Проверить, является ли вектор пустым.
  * @param vec Указатель на вектор.
  * @retval true - вектор является пустым.
@@ -74,7 +72,6 @@ void *getVectorElement(const vector *vec, size_t idx);
 bool isVectorEmpty(const vector *vec);
 
 /**
- * @ingroup common
  * @brief Получить размер вектора.
  * @param vec Указатель на вектор.
  * @return Размер вектора.
@@ -82,7 +79,6 @@ bool isVectorEmpty(const vector *vec);
 size_t getVectorSize(const vector *vec);
 
 /**
- * @ingroup common
  * @brief Отсортировать вектор.
  * @details Для сортировки используется функция qsort()
  * стандартной библиотеки C.
@@ -90,3 +86,7 @@ size_t getVectorSize(const vector *vec);
  * @param comparator Указатель на функцию сравнения элементов вектора.
  */
 void qsortVector(vector *vec, vector_cmp *comparator);
+
+/**
+ * @}
+ */

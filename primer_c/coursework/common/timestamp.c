@@ -2,31 +2,6 @@
 
 #include <time.h>
 
-//! Год, с которого начинается отсчет лет.
-#define BASE_YEAR 1900U
-//! Минимальный номер месяца.
-#define MIN_MONTH 1U
-//! Максимальный номер месяца.
-#define MAX_MONTH 12U
-//! Минимальный номер дня.
-#define MIN_DAY 1U
-//! Максимальный номер дня во 2 месяце невисокосного года.
-#define MAX_DAY_28 28U
-//! Максимальный номер дня во 2 месяце високосного года.
-#define MAX_DAY_29 29U
-//! Максимальный номер дня в 4, 6, 9, 11 месяцах.
-#define MAX_DAY_30 30U
-//! Максимальный номер дня в 1, 3, 5, 7, 8, 10, 12 месяцах.
-#define MAX_DAY_31 31U
-//! Минимальное число часов.
-#define MIN_HOUR 0U
-//! Максимальное число часов.
-#define MAX_HOUR 23U
-//! Минимальное число минут.
-#define MIN_MINUTE 0U
-//! Максимальное число минут.
-#define MAX_MINUTE 59U
-
 /**
  * @brief Названия месяцев.
  */
@@ -51,7 +26,7 @@ enum {
  */
 static uint16_t getCurrentYear() {
     static bool isInitialized = false;
-    static uint16_t year = BASE_YEAR;
+    static uint16_t year = MIN_YEAR;
 
     if (!isInitialized) {
         time_t timer = time(NULL);
@@ -89,7 +64,7 @@ static bool isLeapYear(const uint16_t year) {
  * @retval false - год временной метки недостоверен.
  */
 static bool isYearValid(const timestamp *timestamp) {
-    if ((BASE_YEAR <= timestamp->year) && (timestamp->year <= getCurrentYear())) {
+    if ((MIN_YEAR <= timestamp->year) && (timestamp->year <= getCurrentYear())) {
         return true;
     }
     return false;
@@ -168,21 +143,66 @@ bool isTimestampValid(const timestamp *timestamp) {
             isMinuteValid(timestamp));
 }
 
+void makeVoidTimestamp(timestamp *timestamp) {
+    timestamp->year = VOID_YEAR;
+    timestamp->month = VOID_MONTH;
+    timestamp->day = VOID_DAY;
+    timestamp->hour = VOID_HOUR;
+    timestamp->minute = VOID_MINUTE;
+}
+
+bool isVoidTimestamp(const timestamp *timestamp) {
+    return ((timestamp->year == VOID_YEAR) && (timestamp->month == VOID_MONTH) &&
+            (timestamp->day == VOID_DAY) && (timestamp->hour == VOID_HOUR) &&
+            (timestamp->minute == VOID_MINUTE));
+}
+
 int cmpTimestamps(const timestamp *first, const timestamp *second) {
     if (first->year != second->year) {
-        return (int)(first->year - second->year);
+        return (int)(first->year) - (int)(second->year);
     }
     if (first->month != second->month) {
-        return (int)(first->month - second->month);
+        return (int)(first->month) - (int)(second->month);
     }
     if (first->day != second->day) {
-        return (int)(first->day - second->day);
+        return (int)(first->day) - (int)(second->day);
     }
     if (first->hour != second->hour) {
-        return (int)(first->hour - second->hour);
+        return (int)(first->hour) - (int)(second->hour);
     }
     if (first->minute != second->minute) {
-        return (int)(first->minute - second->minute);
+        return (int)(first->minute) - (int)(second->minute);
     }
     return 0;
+}
+
+bool isSubTimestamp(const timestamp *base, const timestamp *sub) {
+    if (!isYearValid(base) || (base->year != sub->year)) {
+        return false;
+    }
+    if (!isMonthValid(base)) {
+        return true;
+    }
+    if (base->month != sub->month) {
+        return false;
+    }
+    if (!isDayValid(base)) {
+        return true;
+    }
+    if (base->day != sub->day) {
+        return false;
+    }
+    if (!isHourValid(base)) {
+        return true;
+    }
+    if (base->hour != sub->hour) {
+        return false;
+    }
+    if (!isMinuteValid(base)) {
+        return true;
+    }
+    if (base->minute != sub->minute) {
+        return false;
+    }
+    return true;
 }

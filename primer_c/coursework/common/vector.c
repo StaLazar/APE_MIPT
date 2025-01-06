@@ -23,13 +23,13 @@ bool initVector(vector *vec, const size_t typeSize, const size_t capacity) {
         return false;
     }
     vec->data = (void **) malloc(capacity * sizeof(void *));
-    if (vec->data != NULL) {
-        vec->typeSize = typeSize;
-        vec->size = 0U;
-        vec->capacity = capacity;
-        return true;
+    if (vec->data == NULL) {
+        return false;
     }
-    return false;
+    vec->typeSize = typeSize;
+    vec->size = 0U;
+    vec->capacity = capacity;
+    return true;
 }
 
 void clearVector(vector *vec) {

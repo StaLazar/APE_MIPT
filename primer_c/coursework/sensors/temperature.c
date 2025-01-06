@@ -50,7 +50,7 @@ static void findStatsLimits(const vector *records, const timestamp *timestamp,
         if (getVectorElement(records, idx) == NULL) {
             continue;
         }
-        const temp_data *data = *(const temp_data **) getVectorElement(records, idx);
+        const temp_data *data = (const temp_data *) getVectorElement(records, idx);
         const bool isInTimeRange = isSubTimestamp(timestamp, &(data->timestamp));
         if (!isBeginSet && isInTimeRange) {
             *begin = idx;
@@ -83,7 +83,7 @@ void qsortTempByRecord(vector *records) {
     qsortVector(records, cmpTempRecords);
 }
 
-void printTimeTempStats(const vector *records, const timestamp *timestamp) {
+void printTempStats(const vector *records, const timestamp *timestamp) {
     size_t begin = 0;
     size_t end = 0;
     findStatsLimits(records, timestamp, &begin, &end);
@@ -99,7 +99,7 @@ void printTimeTempStats(const vector *records, const timestamp *timestamp) {
         if (getVectorElement(records, idx) == NULL) {
             continue;
         }
-        const temp_data *data = *(const temp_data **) getVectorElement(records, idx);
+        const temp_data *data = (const temp_data *) getVectorElement(records, idx);
         if (!data->record.isValid) {
             continue;
         }

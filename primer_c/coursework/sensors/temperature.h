@@ -63,7 +63,7 @@ void qsortTempByRecord(vector *records);
  * @param timestamp Указатель на временную метку, определяющую временной
  * период, за который необходимо вывести статистику.
  */
-void printTimeTempStats(const vector *records, const timestamp *timestamp);
+void printTempStats(const vector *records, const timestamp *timestamp);
 
 /**
  * @}

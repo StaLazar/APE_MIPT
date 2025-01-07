@@ -61,8 +61,8 @@ static void findStatsLimits(const vector *records, const timestamp *timestamp,
             return;
         }
     }
-    if (isBeginSet && (*begin == (getVectorSize(records) - 1U))) {
-        *end = *begin + 1U;
+    if (isBeginSet) {
+        *end = getVectorSize(records);
     }
 }
 
@@ -76,24 +76,30 @@ bool readTempFromFile(const char *path, vector *records) {
     size_t lineNumber = 0;
     timestamp timeDate;
     temp_record record;
-    int scanCount = EOF + 1;
-    while (scanCount != EOF) {
+    int scanCount = 0;
+    while (true) {
         makeVoidTimestamp(&timeDate);
         makeTempRecord(&record, MAX_TEMPERATURE + 1);
-        scanCount = fscanf(file, "%d;%d;%d;%d;%d;%d", &(timeDate.year), &(timeDate.month),
-                &(timeDate.day), &(timeDate.hour), &(timeDate.minute), &(record.value));
+        scanCount = fscanf(file, "%hd;%hhd;%hhd;%hhd;%hhd;%hhd",
+                &(timeDate.year), &(timeDate.month), &(timeDate.day),
+                &(timeDate.hour), &(timeDate.minute), &(record.value));
         ++lineNumber;
-        if (scanCount != valuesCount) {
-            printf("Incorrect data format in line #%ld of file '%s'", lineNumber, path);
+        if (scanCount == EOF) {
+            break;
+        } else if (scanCount != valuesCount) {
+            printf("Incorrect data format in line #%ld of file '%s'\n", lineNumber, path);
+            //! Очистка буфера от некорректных данных:
+            fscanf(file, "%*[^\n]");
+            fscanf(file, "%*c");
             continue;
         }
         makeTempRecord(&record, record.value);
         if (!isTimestampValid(&timeDate) || !record.isValid) {
-            printf("Invalid data in line #%ld of file '%s'", lineNumber, path);
+            printf("Invalid data in line #%ld of file '%s'\n", lineNumber, path);
             continue;
         }
         temp_data data = {timeDate, record};
-        addVectorElement(&records, &data);
+        addVectorElement(records, &data);
     }
     fclose(file);
     return true;
@@ -121,7 +127,7 @@ void printTempStats(const vector *records, const timestamp *timestamp) {
     size_t end = 0;
     findStatsLimits(records, timestamp, &begin, &end);
     if (begin == end) {
-        printf("There is no data for the specified time period");
+        printf("There is no data for the specified time period\n");
         return;
     }
     int8_t min = INT8_MAX;
@@ -142,9 +148,9 @@ void printTempStats(const vector *records, const timestamp *timestamp) {
         average += (double)(data->record.value);
     }
     if (validCount == 0U) {
-        printf("There is no valid data for the specified time period");
+        printf("There is no valid data for the specified time period\n");
         return;
     }
     average /= validCount;
-    printf("Minimum: %+d\tMaximum: %+d\tAverage: %+.3f", min, max, average);
+    printf("Minimum: %+d\tMaximum: %+d\tAverage: %+.3f\n", min, max, average);
 }

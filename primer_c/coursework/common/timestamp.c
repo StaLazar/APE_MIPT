@@ -209,7 +209,7 @@ bool isSubTimestamp(const timestamp *base, const timestamp *sub) {
 
 void printTimestamp(const timestamp *timestamp) {
     if (isTimestampValid(timestamp)) {
-        printf("%d.%d.%d-%d:%d", timestamp->year, timestamp->month,
+        printf("%04d.%02d.%02d-%02d:%02d", timestamp->year, timestamp->month,
                 timestamp->day, timestamp->hour, timestamp->minute);
         return;
     }
@@ -217,21 +217,21 @@ void printTimestamp(const timestamp *timestamp) {
         printf("UTST"); //!< Аббревиатура "Unknown timestamp".
         return;
     }
-    printf("%d", timestamp->year);
+    printf("%04d", timestamp->year);
     if (!isMonthValid(timestamp)) {
         return;
     }
-    printf(".%d", timestamp->month);
+    printf(".%02d", timestamp->month);
     if (!isDayValid(timestamp)) {
         return;
     }
-    printf(".%d", timestamp->day);
+    printf(".%02d", timestamp->day);
     if (!isHourValid(timestamp)) {
         return;
     }
-    printf("-%d", timestamp->hour);
+    printf("-%02d", timestamp->hour);
     if (!isMinuteValid(timestamp)) {
         return;
     }
-    printf(":%d", timestamp->minute);
+    printf(":%02d", timestamp->minute);
 }

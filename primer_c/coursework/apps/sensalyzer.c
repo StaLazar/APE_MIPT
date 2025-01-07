@@ -11,7 +11,8 @@ void printTempData(const vector *records) {
         const temp_data *data = (const temp_data *) getVectorElement(records, i);
         printTimestamp(&(data->timestamp));
         printf("\t---\t");
-        printf("%+02d (%d)\n", data->record.value, data->record.isValid);
+        printTempRecord(&(data->record));
+        printf("\n");
     }
     printf("--- temp_data ---\n\n");
 }

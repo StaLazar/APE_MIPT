@@ -72,6 +72,12 @@ void qsortTempByTimestamp(vector *records);
 void qsortTempByRecord(vector *records);
 
 /**
+ * @brief Вывести в консоль значение температуры с достоверностью.
+ * @param record Значение температуры с достоверностью для вывода.
+ */
+void printTempRecord(const temp_record *record);
+
+/**
  * @brief Вывести в консоль статистику по температуре
  * за указанный временной период.
  * @details Если данные по температуре за указанный временной

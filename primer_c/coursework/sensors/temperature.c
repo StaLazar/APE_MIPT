@@ -66,13 +66,46 @@ static void findStatsLimits(const vector *records, const timestamp *timestamp,
     }
 }
 
-temp_record makeTempRecord(const int8_t value) {
-    temp_record record = {0, false};
-    if ((MIN_TEMPERATURE <= value) && (value <= MAX_TEMPERATURE)) {
-        record.value = value;
-        record.isValid = true;
+bool readTempFromFile(const char *path, vector *records) {
+    static const int valuesCount = 6;
+    FILE *file = fopen(path, "r");
+    if (file == NULL) {
+        perror("Incorrect path value");
+        return false;
     }
-    return record;
+    size_t lineNumber = 0;
+    timestamp timeDate;
+    temp_record record;
+    int scanCount = EOF + 1;
+    while (scanCount != EOF) {
+        makeVoidTimestamp(&timeDate);
+        makeTempRecord(&record, MAX_TEMPERATURE + 1);
+        scanCount = fscanf(file, "%d;%d;%d;%d;%d;%d", &(timeDate.year), &(timeDate.month),
+                &(timeDate.day), &(timeDate.hour), &(timeDate.minute), &(record.value));
+        ++lineNumber;
+        if (scanCount != valuesCount) {
+            printf("Incorrect data format in line #%ld of file '%s'", lineNumber, path);
+            continue;
+        }
+        makeTempRecord(&record, record.value);
+        if (!isTimestampValid(&timeDate) || !record.isValid) {
+            printf("Invalid data in line #%ld of file '%s'", lineNumber, path);
+            continue;
+        }
+        temp_data data = {timeDate, record};
+        addVectorElement(&records, &data);
+    }
+    fclose(file);
+    return true;
+}
+
+void makeTempRecord(temp_record *record, const int8_t value) {
+    record->value = value;
+    if ((MIN_TEMPERATURE <= value) && (value <= MAX_TEMPERATURE)) {
+        record->isValid = true;
+    } else {
+        record->isValid = false;
+    }
 }
 
 void qsortTempByTimestamp(vector *records) {

@@ -88,7 +88,7 @@ void printTempStats(const vector *records, const timestamp *timestamp) {
     size_t end = 0;
     findStatsLimits(records, timestamp, &begin, &end);
     if (begin == end) {
-        printf("There is no data for the specified time period\n");
+        printf("There is no data for the specified time period");
         return;
     }
     int8_t min = INT8_MAX;
@@ -109,9 +109,9 @@ void printTempStats(const vector *records, const timestamp *timestamp) {
         average += (double)(data->record.value);
     }
     if (validCount == 0U) {
-        printf("There is no valid data for the specified time period\n");
+        printf("There is no valid data for the specified time period");
         return;
     }
     average /= validCount;
-    printf("Minimum: %+d\tMaximum: %+d\tAverage: %+.3f\n", min, max, average);
+    printf("Minimum: %+d\tMaximum: %+d\tAverage: %+.3f", min, max, average);
 }

@@ -98,5 +98,12 @@ int cmpTimestamps(const timestamp *first, const timestamp *second);
 bool isSubTimestamp(const timestamp *base, const timestamp *sub);
 
 /**
+ * @brief Вывести в консоль временную метку.
+ * @details Выводит только достоверные компоненты временной метки.
+ * @param timestamp Указатель на временную метку для вывода.
+ */
+void printTimestamp(const timestamp *timestamp);
+
+/**
  * @}
  */

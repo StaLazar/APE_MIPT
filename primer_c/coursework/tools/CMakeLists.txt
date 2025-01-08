@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.25.0)
 
 add_library(tools
-    cmd_interface.c
+    cmd_handler.c
 )
 
 target_include_directories(tools PUBLIC

@@ -17,7 +17,7 @@ void printTempData(const vector *records) {
     printf("--- temp_data ---\n\n");
 }
 
-void test() {
+void testWork() {
     vector records;
     initVector(&records, sizeof(temp_data), 1U);
 
@@ -46,8 +46,20 @@ void test() {
     clearVector(&records);
 }
 
+void testTimestamp() {
+    timestamp base;
+    makeVoidTimestamp(&base);
+
+    char *format = "2024.10.13-14:15";
+    makeTimestamp(&base, format);
+
+    printTimestamp(&base);
+    printf("\n");
+}
+
 int main () {
-    test();
+    testTimestamp();
+    // testWork();
 
     return 0;
 }

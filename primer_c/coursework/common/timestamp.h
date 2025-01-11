@@ -64,6 +64,17 @@ typedef struct {
 bool isTimestampValid(const timestamp *timestamp);
 
 /**
+ * @brief Сформировать временную метку по формат-строке.
+ * @details Если формат-строка пустая или содержит
+ * недостоверные данные, то временная метка будет
+ * сделана пустой.
+ * @param timestamp Временная метка.
+ * @param string Строка формата "ГГГГ.ММ.ДД-ЧЧ:ММ",
+ * по которой будет сформирована временная метка.
+ */
+void makeTimestamp(timestamp *timestamp, const char *string);
+
+/**
  * @brief Сделать временную метку пустой.
  * @param timestamp Указатель на временную метку,
  * которую необходимо сделать пустой.

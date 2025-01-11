@@ -1,6 +1,30 @@
 #include "timestamp.h"
 
 #include <time.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+
+//! Основание десятичной системы счисления.
+#define BASE_10 10
+
+/**
+ * @brief Макрос обработки некорректной формат-строки временной метки.
+ * @param str Некорректная формат-строка для вывода в консоль.
+ * @param timeDate Указатель на временную метку, которая будет сделана пустой.
+ */
+#define HANDLE_INVALID_FORMAT_STRING(str, timeDate) \
+    printf("Incorrect or invalid timestamp's format string: '%s'\n", (str)); \
+    makeVoidTimestamp((timeDate));
+
+/**
+ * @brief Макрос освобождения памяти с последующим вызовом return.
+ * @param ptr Указатель на объект, из-под которого нужно высвободить память.
+ */
+#define FREE_RETURN(ptr) \
+    free((ptr)); \
+    (ptr) = NULL; \
+    return;
 
 /**
  * @brief Названия месяцев.
@@ -137,10 +161,88 @@ static bool isMinuteValid(const timestamp *timestamp) {
     return false;
 }
 
+/**
+ * @brief Извлечь из строки десятичное беззнаковое число.
+ * @details В string будет записана строка, оставшаяся от исходной
+ * после извлечения из нее искомого числа.
+ * @param string Строка, из которой будет извлечено число.
+ * @param marker Символ, предваряющий извлекаемое число.
+ * @retval [0; LONG_MAX] - данные в строке корректны.
+ * @retval -1 - данные в строке некорректны.
+ */
+static long getUnumFromStr(char *string, const char marker) {
+    if ((strlen(string) == 0) || (string[0] != marker)) {
+        return -1L;
+    }
+    for (size_t i = 0; i < strlen(string); ++i) {
+        string[i] = string[i + 1];
+    }
+    if ((strlen(string) == 0) || (!isdigit(string[0]))) {
+        return -1L;
+    }
+    char *remainder;
+    const long int result = strtol(string, &remainder, BASE_10);
+    strcpy(string, remainder);
+    return result;
+}
+
 bool isTimestampValid(const timestamp *timestamp) {
     return (isYearValid(timestamp) && isMonthValid(timestamp) &&
             isDayValid(timestamp) && isHourValid(timestamp) &&
             isMinuteValid(timestamp));
+}
+
+void makeTimestamp(timestamp *timestamp, const char *string) {
+    const size_t strSize = sizeof(char) * (strlen(string) + 5UL);
+    char *str = (char *) malloc(strSize);
+    strcat(str, "!");
+    strcat(str, string);
+    long number = -1L;
+
+    number = getUnumFromStr(str, '!');
+    timestamp->year = (number == -1L) ? VOID_YEAR : (uint16_t) number;
+    if (!isYearValid(timestamp)) {
+        HANDLE_INVALID_FORMAT_STRING(string, timestamp)
+        FREE_RETURN(str)
+    }
+    if (strlen(str) == 0) {
+        FREE_RETURN(str)
+    }
+    number = getUnumFromStr(str, '.');
+    timestamp->month = (number == -1L) ? VOID_MONTH : (uint8_t) number;
+    if (!isMonthValid(timestamp)) {
+        HANDLE_INVALID_FORMAT_STRING(string, timestamp)
+        FREE_RETURN(str)
+    }
+    if (strlen(str) == 0) {
+        FREE_RETURN(str)
+    }
+    number = getUnumFromStr(str, '.');
+    timestamp->day = (number == -1L) ? VOID_DAY : (uint8_t) number;
+    if (!isDayValid(timestamp)) {
+        HANDLE_INVALID_FORMAT_STRING(string, timestamp)
+        FREE_RETURN(str)
+    }
+    if (strlen(str) == 0) {
+        FREE_RETURN(str)
+    }
+    number = getUnumFromStr(str, '-');
+    timestamp->hour = (number == -1L) ? VOID_HOUR : (uint8_t) number;
+    if (!isHourValid(timestamp)) {
+        HANDLE_INVALID_FORMAT_STRING(string, timestamp)
+        FREE_RETURN(str)
+    }
+    if (strlen(str) == 0) {
+        FREE_RETURN(str)
+    }
+    number = getUnumFromStr(str, ':');
+    timestamp->minute = (number == -1L) ? VOID_MINUTE : (uint8_t) number;
+    if ((!isMinuteValid(timestamp)) || (strlen(str) != 0)) {
+        HANDLE_INVALID_FORMAT_STRING(string, timestamp)
+        FREE_RETURN(str)
+    }
+
+    FREE_RETURN(str)
 }
 
 void makeVoidTimestamp(timestamp *timestamp) {

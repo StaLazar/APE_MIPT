@@ -33,12 +33,14 @@ void handleCmdCommands(const int argc, char *argv[], char *path, char *timeDate)
                 printCmdHelp();
                 break;
             case 'f':
-                path = (char *) malloc(sizeof(char) * strlen(optarg));
-                memcpy(path, optarg, sizeof(char) * strlen(optarg));
+                const size_t pathSize = sizeof(char) * (strlen(optarg) + 1UL);
+                path = (char *) malloc(pathSize);
+                strcpy(path, optarg);
                 break;
             case 't':
-                timeDate = (char *) malloc(sizeof(char) * strlen(optarg));
-                memcpy(timeDate, optarg, sizeof(char) * strlen(optarg));
+                const size_t timeDateSize = sizeof(char) * (strlen(optarg) + 1UL);
+                timeDate = (char *) malloc(timeDateSize);
+                strcpy(timeDate, optarg);
                 break;
             case '?':
                 printf("Unknown or invalid option '-%c'.\n", optopt);

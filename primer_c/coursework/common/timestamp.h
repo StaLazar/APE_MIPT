@@ -45,6 +45,24 @@
 #define VOID_MINUTE (MAX_MINUTE + 1U)
 
 /**
+ * @brief Названия месяцев.
+ */
+typedef enum {
+    January = 1, //!< Январь.
+    February, //!< Февраль.
+    March, //!< Март.
+    April, //!< Апрель.
+    May, //!< Май.
+    June, //!< Июнь.
+    July, //!< Июль.
+    August, //!< Август.
+    September, //!< Сентябрь.
+    October, //!< Октябрь.
+    November, //!< Ноябрь.
+    December //!< Декабрь.
+} months;
+
+/**
  * @brief Временная метка.
  */
 typedef struct {

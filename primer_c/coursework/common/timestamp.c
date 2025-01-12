@@ -11,11 +11,11 @@
 /**
  * @brief Макрос обработки некорректной формат-строки временной метки.
  * @param str Некорректная формат-строка для вывода в консоль.
- * @param timeDate Указатель на временную метку, которая будет сделана пустой.
+ * @param period Указатель на временную метку, которая будет сделана пустой.
  */
-#define HANDLE_INVALID_FORMAT_STRING(str, timeDate) \
+#define HANDLE_INVALID_FORMAT_STRING(str, period) \
     printf("Incorrect or invalid timestamp's format string: '%s'\n", (str)); \
-    makeVoidTimestamp((timeDate));
+    makeVoidTimestamp((period));
 
 /**
  * @brief Макрос освобождения памяти с последующим вызовом return.
@@ -27,24 +27,6 @@
         (ptr) = NULL; \
     } \
     return;
-
-/**
- * @brief Названия месяцев.
- */
-enum {
-    January = 1, //!< Январь.
-    February, //!< Февраль.
-    March, //!< Март.
-    April, //!< Апрель.
-    May, //!< Май.
-    June, //!< Июнь.
-    July, //!< Июль.
-    August, //!< Август.
-    September, //!< Сентябрь.
-    October, //!< Октябрь.
-    November, //!< Ноябрь.
-    December //!< Декабрь.
-};
 
 /**
  * @brief Получить текущий год.

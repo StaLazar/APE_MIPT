@@ -17,59 +17,14 @@
         (ptr) = NULL; \
     }
 
-void printTempData(const vector *records) {
-    printf("\n--- temp_data ---\n");
-    for (size_t i = 0U; i < getVectorSize(records); ++i) {
-        const temp_data *data = (const temp_data *) getVectorElement(records, i);
-        printTimestamp(&(data->timestamp));
-        printf("\t---\t");
-        printTempRecord(&(data->record));
-        printf("\n");
-    }
-    printf("--- temp_data ---\n\n");
-}
-
-void testWork() {
-    vector records;
-    initVector(&records, sizeof(temp_data), 1UL);
-
-    if (!readTempFromFile("debugging_data.csv", &records)) {
-        clearVector(&records);
-        return;
-    }
-
-    printTempData(&records);
-    qsortTempByTimestamp(&records);
-    printTempData(&records);
-
-    timestamp base;
-    makeVoidTimestamp(&base);
-    base.year = 2022U;
-    base.month = 1U;
-    base.day = 16U;
-    base.hour = 1U;
-
-    printf("\nTemperature statistics for ");
-    printTimestamp(&base);
-    printf(" :\n");
-    printTempStats(&records, &base);
-    printf("\n");
-
-    clearVector(&records);
-}
-
-void testTimestamp() {
-    timestamp base;
-    makeVoidTimestamp(&base);
-
-    char *format = "2024.10.13-14:15";
-    makeTimestamp(&base, format);
-
-    printTimestamp(&base);
-    printf("\n");
-}
-
-int main (int argc, char *argv[]) {
+/**
+ * @brief Основная функция приложения Sensalyzer.
+ * @param[in] argc Количество переданных аргументов командной строки.
+ * @param[in] argv Массив строк, представляющий переданный набор аргументов.
+ * @retval 0 - приложение завершило работу в штатном режиме.
+ * @retval 1 - приложение завершило работу с ошибкой при работе со входным файлом.
+ */
+int main(int argc, char *argv[]) {
     if (argc == 1) {
         printCmdHelp();
         return 0;
@@ -85,6 +40,9 @@ int main (int argc, char *argv[]) {
         return 0;
     }
 
+    printf("\n------------");
+    printf(" Errors occurred during the file and CMD processing ");
+    printf("------------\n\n");
     vector records;
     initVector(&records, sizeof(temp_data), 1UL);
     if (!readTempFromFile(filePath, &records)) {
@@ -104,11 +62,14 @@ int main (int argc, char *argv[]) {
 
     timestamp period;
     makeTimestamp(&period, timeDate);
-    printf("\nTemperature statistics based on data from '%s'\n", filePath);
+    printf("\n--------------");
+    printf(" Temperature statistics based on specified file ");
+    printf("--------------\n\n");
     if (!isVoidTimestamp(&period)) {
-        printTempStats(&records, &period);
+        printPeriodTempStats(&records, &period);
+        printf("\n");
     } else {
-        //! TODO: Реализовать функцию вывода общей статистики по всему файлу.
+        printGlobalTempStats(&records);
     }
 
     clearVector(&records);

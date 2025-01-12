@@ -1,6 +1,16 @@
 #include "temperature.h"
 
 /**
+ * @brief Макрос вывода временной метки в консоль в формате
+ * "Timestamp: XXXX.XX.XX-XX:XX | ".
+ * @param period Указатель на временную метку для вывода в консоль.
+ */
+#define PRINT_TIMESTAMP(period) \
+    printf("Timestamp: "); \
+    printTimestamp((period)); \
+    printf(" | ");
+
+/**
  * @brief Сравнить временные метки двух записей с датчика температуры.
  * @param first Первая запись с датчика температуры.
  * @param second Вторая запись с датчика температуры.
@@ -74,15 +84,15 @@ bool readTempFromFile(const char *path, vector *records) {
         return false;
     }
     size_t lineNumber = 0;
-    timestamp timeDate;
+    timestamp period;
     temp_record record;
     int scanCount = 0;
     while (true) {
-        makeVoidTimestamp(&timeDate);
+        makeVoidTimestamp(&period);
         makeTempRecord(&record, MAX_TEMPERATURE + 1);
         scanCount = fscanf(file, "%hd;%hhd;%hhd;%hhd;%hhd;%hhd",
-                &(timeDate.year), &(timeDate.month), &(timeDate.day),
-                &(timeDate.hour), &(timeDate.minute), &(record.value));
+                &(period.year), &(period.month), &(period.day),
+                &(period.hour), &(period.minute), &(record.value));
         ++lineNumber;
         if (scanCount == EOF) {
             break;
@@ -94,11 +104,11 @@ bool readTempFromFile(const char *path, vector *records) {
             continue;
         }
         makeTempRecord(&record, record.value);
-        if (!isTimestampValid(&timeDate) || !record.isValid) {
+        if (!isTimestampValid(&period) || !record.isValid) {
             printf("Invalid data in line #%ld of file '%s'\n", lineNumber, path);
             continue;
         }
-        temp_data data = {timeDate, record};
+        temp_data data = {period, record};
         addVectorElement(records, &data);
     }
     fclose(file);
@@ -126,14 +136,18 @@ void printTempRecord(const temp_record *record) {
     printf("%+02d (%d)", record->value, record->isValid);
 }
 
-void printTempStats(const vector *records, const timestamp *timestamp) {
+void printPeriodTempStats(const vector *records, const timestamp *timestamp) {
+    if (isVectorEmpty(records)) {
+        printf("There is no data for statistics' output\n");
+        return;
+    }
     size_t begin = 0;
     size_t end = 0;
     findStatsLimits(records, timestamp, &begin, &end);
     if (begin == end) {
-        printf("There is no data for '");
-        printTimestamp(timestamp);
-        printf("'\n");
+        PRINT_TIMESTAMP(timestamp)
+         //! Аббревиатура "No suitable data":
+        printf("Minimum: NSD | Maximum: NSD | Average:   NSD\n");
         return;
     }
     int8_t min = INT8_MAX;
@@ -154,14 +168,36 @@ void printTempStats(const vector *records, const timestamp *timestamp) {
         average += (double)(data->record.value);
     }
     if (validCount == 0U) {
-        printf("There is no valid data for '");
-        printTimestamp(timestamp);
-        printf("'\n");
+        PRINT_TIMESTAMP(timestamp)
+         //! Аббревиатура "No valid data":
+        printf("Minimum: NVD | Maximum: NVD | Average:   NVD\n");
         return;
     }
     average /= validCount;
-    printf("Timestamp: ");
-    printTimestamp(timestamp);
-    printf(" | ");
-    printf("Minimum: %+d | Maximum: %+d | Average: %+.3f\n", min, max, average);
+    PRINT_TIMESTAMP(timestamp)
+    printf("Minimum: %+03hhd | Maximum: %+03hhd | Average: %+07.3f\n", min, max, average);
+}
+
+void printGlobalTempStats(const vector *records) {
+    if (isVectorEmpty(records)) {
+        printf("There is no data for statistics' output\n");
+        return;
+    }
+    const temp_data *firstRecord = (const temp_data *) getVectorElement(records, 0UL);
+    const temp_data *lastRecord =
+            (const temp_data *) getVectorElement(records, getVectorSize(records) - 1UL);
+    const uint16_t firstYear = firstRecord->timestamp.year;
+    const uint16_t lastYear = lastRecord->timestamp.year;
+    for (uint16_t year = firstYear; year <= lastYear; ++year) {
+        timestamp period;
+        makeVoidTimestamp(&period);
+        period.year = year;
+        printf("   ");
+        printPeriodTempStats(records, &period);
+        for (uint8_t month = January; month <= December; ++month) {
+            period.month = month;
+            printPeriodTempStats(records, &period);
+        }
+        printf("\n");
+    }
 }

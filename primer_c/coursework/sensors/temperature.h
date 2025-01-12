@@ -90,7 +90,20 @@ void printTempRecord(const temp_record *record);
  * @param timestamp Указатель на временную метку, определяющую
  * временной период, за который необходимо вывести статистику.
  */
-void printTempStats(const vector *records, const timestamp *timestamp);
+void printPeriodTempStats(const vector *records, const timestamp *timestamp);
+
+/**
+ * @brief Вывести в консоль статистику по температуре
+ * за указанные в массиве данных годы и месяцы.
+ * @details Предполагается, что на вход подается отсортированный
+ * по временной метке массив данных с датчика температуры.
+ * Если данные по температуре за какой-либо год или месяц отсутствуют
+ * или недостоверны, то выведет в консоль соответствующее сообщение,
+ * а иначе - статистику вида "Год -> Месяцы" в формате
+ * "Timestamp: XXXX.XX.XX-XX:XX | Minimum: XX | Maximum: XX | Average: XX.XXX".
+ * @param records Массив данных с датчика температуры.
+ */
+void printGlobalTempStats(const vector *records);
 
 /**
  * @}

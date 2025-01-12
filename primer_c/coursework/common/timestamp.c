@@ -22,8 +22,10 @@
  * @param ptr Указатель на объект, из-под которого нужно высвободить память.
  */
 #define FREE_RETURN(ptr) \
-    free((ptr)); \
-    (ptr) = NULL; \
+    if ((ptr) != NULL) { \
+        free((ptr)); \
+        (ptr) = NULL; \
+    } \
     return;
 
 /**
@@ -193,8 +195,17 @@ bool isTimestampValid(const timestamp *timestamp) {
 }
 
 void makeTimestamp(timestamp *timestamp, const char *string) {
+    makeVoidTimestamp(timestamp);
+    if (string == NULL) {
+        return;
+    }
+
     const size_t strSize = sizeof(char) * (strlen(string) + 5UL);
     char *str = (char *) malloc(strSize);
+    if (str == NULL) {
+        return;
+    }
+    memset(str, 0, strSize);
     strcat(str, "!");
     strcat(str, string);
     long number = -1L;

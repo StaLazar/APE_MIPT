@@ -47,6 +47,9 @@ void addVectorElement(vector *vec, void *data) {
         resizeVector(vec);
     }
     vec->data[vec->size] = (void *) malloc(vec->typeSize);
+    if (vec->data[vec->size] == NULL) {
+        return;
+    }
     memcpy(vec->data[vec->size], data, vec->typeSize);
     vec->size++;
 }

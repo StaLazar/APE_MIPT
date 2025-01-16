@@ -1,7 +1,7 @@
-#include "common/timestamp.h"
-#include "common/vector.h"
-#include "sensors/temperature.h"
-#include "tools/cmd_handler.h"
+#include "timestamp.h"
+#include "vector.h"
+#include "temperature.h"
+#include "cmd_handler.h"
 
 #include <stdio.h>
 #include <stdbool.h>

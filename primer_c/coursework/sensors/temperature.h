@@ -1,7 +1,7 @@
 #pragma once
 
-#include "common/timestamp.h"
-#include "common/vector.h"
+#include "timestamp.h"
+#include "vector.h"
 
 #include <stdio.h>
 #include <stdint.h>

@@ -5,7 +5,7 @@ add_library(sensors
 )
 
 target_include_directories(sensors PUBLIC
-    ${PROJECT_SOURCE_DIR}
+    ${COMMON_SOURCE_DIR}
 )
 
 target_link_libraries(sensors PRIVATE

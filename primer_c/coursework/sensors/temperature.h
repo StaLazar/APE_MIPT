@@ -39,8 +39,8 @@ typedef struct {
  * @details При обнаружении данных, отличных от протокола,
  * выводит в консоль сообщение с указанием строки файла,
  * в которой содержится некорректная информация.
- * @param path Путь до файла с данными.
- * @param records Массив данных, который будет заполнен
+ * @param[in] path Путь до файла с данными.
+ * @param[out] records Массив данных, который будет заполнен
  * информацией из переданного файла.
  * @retval true - чтение данных прошло успешно.
  * @retval false - чтение данных завершилось ошибкой.
@@ -52,28 +52,28 @@ bool readTempFromFile(const char *path, vector *records);
  * @details Если value лежит в допустимом диапазоне температур,
  * то в record будет записано достоверное значение, а иначе -
  * недостоверное.
- * @param record Формируемое значение температуры с достоверностью.
- * @param value Значение температуры.
+ * @param[out] record Формируемое значение температуры с достоверностью.
+ * @param[in] value Значение температуры.
  */
 void makeTempRecord(temp_record *record, int8_t value);
 
 /**
  * @brief Отсортировать массив данных с датчика
  * температуры по временной метке.
- * @param records Массив данных с датчика температуры.
+ * @param[out] records Массив данных с датчика температуры.
  */
 void qsortTempByTimestamp(vector *records);
 
 /**
  * @brief Отсортировать массив данных с датчика
  * температуры по значению температуры.
- * @param records Массив данных с датчика температуры.
+ * @param[out] records Массив данных с датчика температуры.
  */
 void qsortTempByRecord(vector *records);
 
 /**
  * @brief Вывести в консоль значение температуры с достоверностью.
- * @param record Значение температуры с достоверностью для вывода.
+ * @param[in] record Значение температуры с достоверностью для вывода.
  */
 void printTempRecord(const temp_record *record);
 
@@ -86,8 +86,8 @@ void printTempRecord(const temp_record *record);
  * период отсутствуют или недостоверны, то выведет в консоль
  * соответствующее сообщение, а иначе - статистику в формате
  * "Timestamp: XXXX.XX.XX-XX:XX | Minimum: XX | Maximum: XX | Average: XX.XXX".
- * @param records Массив данных с датчика температуры.
- * @param timestamp Указатель на временную метку, определяющую
+ * @param[in] records Массив данных с датчика температуры.
+ * @param[in] timestamp Временная метка, определяющая
  * временной период, за который необходимо вывести статистику.
  */
 void printPeriodTempStats(const vector *records, const timestamp *timestamp);
@@ -101,7 +101,7 @@ void printPeriodTempStats(const vector *records, const timestamp *timestamp);
  * или недостоверны, то выведет в консоль соответствующее сообщение,
  * а иначе - статистику вида "Год -> Месяцы" в формате
  * "Timestamp: XXXX.XX.XX-XX:XX | Minimum: XX | Maximum: XX | Average: XX.XXX".
- * @param records Массив данных с датчика температуры.
+ * @param[in] records Массив данных с датчика температуры.
  */
 void printGlobalTempStats(const vector *records);
 

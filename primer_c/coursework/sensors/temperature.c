@@ -3,7 +3,7 @@
 /**
  * @brief Макрос вывода временной метки в консоль в формате
  * "Timestamp: XXXX.XX.XX-XX:XX | ".
- * @param period Указатель на временную метку для вывода в консоль.
+ * @param[in] period Указатель на временную метку для вывода в консоль.
  */
 #define PRINT_TIMESTAMP(period) \
     printf("Timestamp: "); \
@@ -12,8 +12,8 @@
 
 /**
  * @brief Сравнить временные метки двух записей с датчика температуры.
- * @param first Первая запись с датчика температуры.
- * @param second Вторая запись с датчика температуры.
+ * @param[in] first Первая запись с датчика температуры.
+ * @param[in] second Вторая запись с датчика температуры.
  * @retval Отрицательное число, если first < second.
  * @retval Нуль, если first = second.
  * @retval Положительное число, если first > second.
@@ -26,8 +26,8 @@ static int cmpTempTimestamps(const void *first, const void *second) {
 
 /**
  * @brief Сравнить значения двух записей с датчика температуры.
- * @param first Первая запись с датчика температуры.
- * @param second Вторая запись с датчика температуры.
+ * @param[in] first Первая запись с датчика температуры.
+ * @param[in] second Вторая запись с датчика температуры.
  * @retval Отрицательное число, если first < second.
  * @retval Нуль, если first = second.
  * @retval Положительное число, если first > second.
@@ -47,11 +47,11 @@ static int cmpTempRecords(const void *first, const void *second) {
  * переменную begin будет записан индекс первого элемента
  * этого участка, а в end - индекс элемента, следующего за
  * последним элементом заданного участка.
- * @param records Массив данных с датчика температуры.
- * @param timestamp Указатель на временную метку, определяющую
+ * @param[in] records Массив данных с датчика температуры.
+ * @param[in] timestamp Временная метка, определяющая
  * заданную временную область.
- * @param begin Индекс начала искомого участка массива данных.
- * @param end Индекс конца искомого участка массива данных.
+ * @param[out] begin Индекс начала искомого участка массива данных.
+ * @param[out] end Индекс конца искомого участка массива данных.
  */
 static void findStatsLimits(const vector *records, const timestamp *timestamp,
         size_t *begin, size_t *end) {

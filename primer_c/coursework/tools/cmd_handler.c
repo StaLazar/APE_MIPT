@@ -8,8 +8,8 @@
 /**
  * @brief Скопировать содержимое строки source в строку destination.
  * @details В случае неудачного копирования в destination будет записан NULL.
- * @param destination Строка, в которую будет произведено копирование.
- * @param source Строка, из которой будет произведено копирование.
+ * @param[out] destination Строка, в которую будет произведено копирование.
+ * @param[in] source Строка, из которой будет произведено копирование.
  */
 static void copyString(char **destination, const char *source) {
     const size_t size = sizeof(char) * (strlen(source) + 1UL);

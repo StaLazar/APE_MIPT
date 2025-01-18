@@ -111,9 +111,9 @@ bool isVoidTimestamp(const timestamp *timestamp);
  * @brief Сравнить хронологически две временные метки.
  * @param[in] first Первая временная метка.
  * @param[in] second Вторая временная метка.
- * @retval < 0 Если first < second.
+ * @retval Отрицательное Если first < second.
  * @retval 0 Если first = second.
- * @retval > 0 Если first > second.
+ * @retval Положительное Если first > second.
  */
 int cmpTimestamps(const timestamp *first, const timestamp *second);
 

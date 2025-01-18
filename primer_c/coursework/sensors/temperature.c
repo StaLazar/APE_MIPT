@@ -14,9 +14,9 @@
  * @brief Сравнить временные метки двух записей с датчика температуры.
  * @param[in] first Первая запись с датчика температуры.
  * @param[in] second Вторая запись с датчика температуры.
- * @retval Отрицательное число, если first < second.
- * @retval Нуль, если first = second.
- * @retval Положительное число, если first > second.
+ * @retval < 0 Если first < second.
+ * @retval 0 Если first = second.
+ * @retval > 0 Если first > second.
  */
 static int cmpTempTimestamps(const void *first, const void *second) {
     const temp_data *f = *(const temp_data **)first;
@@ -28,9 +28,9 @@ static int cmpTempTimestamps(const void *first, const void *second) {
  * @brief Сравнить значения двух записей с датчика температуры.
  * @param[in] first Первая запись с датчика температуры.
  * @param[in] second Вторая запись с датчика температуры.
- * @retval Отрицательное число, если first < second.
- * @retval Нуль, если first = second.
- * @retval Положительное число, если first > second.
+ * @retval < 0 Если first < second.
+ * @retval 0 Если first = second.
+ * @retval > 0 Если first > second.
  */
 static int cmpTempRecords(const void *first, const void *second) {
     const temp_data *f = *(const temp_data **)first;

@@ -49,8 +49,8 @@ static uint16_t getCurrentYear() {
 /**
  * @brief Определить, является ли год високосным.
  * @param[in] year Год, подлежащий проверке.
- * @retval true - год является високосным.
- * @retval false - год не является високосным.
+ * @retval true Год является високосным.
+ * @retval false Год не является високосным.
  */
 static bool isLeapYear(const uint16_t year) {
     if (year % 400U == 0U) {
@@ -68,8 +68,8 @@ static bool isLeapYear(const uint16_t year) {
 /**
  * @brief Определить достоверность года временной метки.
  * @param[in] timestamp Временная метка, год которой подлежит проверке.
- * @retval true - год временной метки достоверен.
- * @retval false - год временной метки недостоверен.
+ * @retval true Год временной метки достоверен.
+ * @retval false Год временной метки недостоверен.
  */
 static bool isYearValid(const timestamp *timestamp) {
     if ((MIN_YEAR <= timestamp->year) && (timestamp->year <= getCurrentYear())) {
@@ -81,8 +81,8 @@ static bool isYearValid(const timestamp *timestamp) {
 /**
  * @brief Определить достоверность месяца временной метки.
  * @param[in] timestamp Временная метка, месяц которой подлежит проверке.
- * @retval true - месяц временной метки достоверен.
- * @retval false - месяц временной метки недостоверен.
+ * @retval true Месяц временной метки достоверен.
+ * @retval false Месяц временной метки недостоверен.
  */
 static bool isMonthValid(const timestamp *timestamp) {
     if ((MIN_MONTH <= timestamp->month) && (timestamp->month <= MAX_MONTH)) {
@@ -94,8 +94,8 @@ static bool isMonthValid(const timestamp *timestamp) {
 /**
  * @brief Определить достоверность дня временной метки.
  * @param[in] timestamp Временная метка, день которой подлежит проверке.
- * @retval true - день временной метки достоверен.
- * @retval false - день временной метки недостоверен.
+ * @retval true День временной метки достоверен.
+ * @retval false День временной метки недостоверен.
  */
 static bool isDayValid(const timestamp *timestamp) {
     switch (timestamp->month) {
@@ -122,8 +122,8 @@ static bool isDayValid(const timestamp *timestamp) {
 /**
  * @brief Определить достоверность часа временной метки.
  * @param[in] timestamp Временная метка, час которой подлежит проверке.
- * @retval true - час временной метки достоверен.
- * @retval false - час временной метки недостоверен.
+ * @retval true Час временной метки достоверен.
+ * @retval false Час временной метки недостоверен.
  */
 static bool isHourValid(const timestamp *timestamp) {
     if ((MIN_HOUR <= timestamp->hour) && (timestamp->hour <= MAX_HOUR)) {
@@ -135,8 +135,8 @@ static bool isHourValid(const timestamp *timestamp) {
 /**
  * @brief Определить достоверность минут временной метки.
  * @param[in] timestamp Временная метка, минуты которой подлежат проверке.
- * @retval true - минуты временной метки достоверны.
- * @retval false - минуты временной метки недостоверны.
+ * @retval true Минуты временной метки достоверны.
+ * @retval false Минуты временной метки недостоверны.
  */
 static bool isMinuteValid(const timestamp *timestamp) {
     if ((MIN_MINUTE <= timestamp->minute) && (timestamp->minute <= MAX_MINUTE)) {
@@ -151,8 +151,8 @@ static bool isMinuteValid(const timestamp *timestamp) {
  * после извлечения из нее искомого числа.
  * @param[in, out] string Строка, из которой будет извлечено число.
  * @param[in] marker Символ, предваряющий извлекаемое число.
- * @retval [0; LONG_MAX] - данные в строке корректны.
- * @retval -1 - данные в строке некорректны.
+ * @retval [0; LONG_MAX] Данные в строке корректны.
+ * @retval -1 Данные в строке некорректны.
  */
 static long getUnumFromStr(char *string, const char marker) {
     if ((strlen(string) == 0) || (string[0] != marker)) {

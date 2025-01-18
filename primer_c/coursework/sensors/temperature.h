@@ -42,8 +42,8 @@ typedef struct {
  * @param[in] path Путь до файла с данными.
  * @param[out] records Массив данных, который будет заполнен
  * информацией из переданного файла.
- * @retval true - чтение данных прошло успешно.
- * @retval false - чтение данных завершилось ошибкой.
+ * @retval true Чтение данных прошло успешно.
+ * @retval false Чтение данных завершилось ошибкой.
  */
 bool readTempFromFile(const char *path, vector *records);
 

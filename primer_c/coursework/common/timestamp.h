@@ -76,8 +76,8 @@ typedef struct {
 /**
  * @brief Определить достоверность временной метки.
  * @param[in] timestamp Временная метка.
- * @retval true - временная метка достоверна.
- * @retval false - временная метка недостоверна.
+ * @retval true Временная метка достоверна.
+ * @retval false Временная метка недостоверна.
  */
 bool isTimestampValid(const timestamp *timestamp);
 
@@ -102,8 +102,8 @@ void makeVoidTimestamp(timestamp *timestamp);
 /**
  * @brief Определить, является ли временная метка пустой.
  * @param[in] timestamp Проверяемая временная метка.
- * @retval true - временная метка является пустой.
- * @retval false - временная метка не является пустой.
+ * @retval true Временная метка является пустой.
+ * @retval false Временная метка не является пустой.
  */
 bool isVoidTimestamp(const timestamp *timestamp);
 
@@ -111,9 +111,9 @@ bool isVoidTimestamp(const timestamp *timestamp);
  * @brief Сравнить хронологически две временные метки.
  * @param[in] first Первая временная метка.
  * @param[in] second Вторая временная метка.
- * @retval Отрицательное число, если first < second.
- * @retval Нуль, если first = second.
- * @retval Положительное число, если first > second.
+ * @retval < 0 Если first < second.
+ * @retval 0 Если first = second.
+ * @retval > 0 Если first > second.
  */
 int cmpTimestamps(const timestamp *first, const timestamp *second);
 
@@ -121,8 +121,8 @@ int cmpTimestamps(const timestamp *first, const timestamp *second);
  * @brief Проверить, входит ли метка sub во временную область, заданную меткой base.
  * @param[in] base Временная метка, определяющая временную область.
  * @param[in] sub Временная метка, вхождение которой необходимо проверить.
- * @retval true - метка sub входит во временную область метки base.
- * @retval false - метка sub не входит во временную область метки base.
+ * @retval true Метка sub входит во временную область метки base.
+ * @retval false Метка sub не входит во временную область метки base.
  */
 bool isSubTimestamp(const timestamp *base, const timestamp *sub);
 

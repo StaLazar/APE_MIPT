@@ -29,8 +29,8 @@ typedef struct {
  * @param[out] vec Инициализируемый вектор.
  * @param[in] typeSize Размер хранимого в векторе элемента в байтах.
  * @param[in] capacity Начальная вместимость вектора.
- * @retval true - инициализация прошла успешно.
- * @retval false - инициализация прошла неудачно.
+ * @retval true Инициализация прошла успешно.
+ * @retval false Инициализация прошла неудачно.
  */
 bool initVector(vector *vec, size_t typeSize, size_t capacity);
 
@@ -58,16 +58,16 @@ void delVectorElement(vector *vec, size_t idx);
  * @brief Получить элемент вектора.
  * @param[in] vec Вектор.
  * @param[in] idx Индекс элемента.
- * @retval Элемент вектора, если индекс имеет допустимое значение.
- * @retval NULL, если индекс имеет недопустимое значение.
+ * @retval Элемент Если индекс имеет допустимое значение.
+ * @retval NULL Если индекс имеет недопустимое значение.
  */
 void *getVectorElement(const vector *vec, size_t idx);
 
 /**
  * @brief Проверить, является ли вектор пустым.
  * @param[in] vec Вектор.
- * @retval true - вектор является пустым.
- * @retval false - вектор не является пустым.
+ * @retval true Вектор является пустым.
+ * @retval false Вектор не является пустым.
  */
 bool isVectorEmpty(const vector *vec);
 

@@ -11,7 +11,7 @@
  * @brief Изменить вместимость вектора.
  * @details Увеличивает вместимость вектора в CAPACITY_GROW_FACTOR раз
  * и изменяет размер памяти, ранее выделенной под вектор.
- * @param vec Указатель на вектор.
+ * @param[out] vec Вектор.
  */
 static void resizeVector(vector *vec) {
     vec->capacity = (size_t) ceil(vec->capacity * CAPACITY_GROW_FACTOR);

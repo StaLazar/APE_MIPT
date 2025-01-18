@@ -60,7 +60,7 @@ typedef enum {
     October, //!< Октябрь.
     November, //!< Ноябрь.
     December //!< Декабрь.
-} months;
+} month;
 
 /**
  * @brief Временная метка.
@@ -75,7 +75,7 @@ typedef struct {
 
 /**
  * @brief Определить достоверность временной метки.
- * @param timestamp Временная метка.
+ * @param[in] timestamp Временная метка.
  * @retval true - временная метка достоверна.
  * @retval false - временная метка недостоверна.
  */
@@ -86,22 +86,22 @@ bool isTimestampValid(const timestamp *timestamp);
  * @details Если формат-строка пустая или содержит
  * недостоверные данные, то временная метка будет
  * сделана пустой.
- * @param timestamp Временная метка.
- * @param string Строка формата "ГГГГ.ММ.ДД-ЧЧ:ММ",
+ * @param[out] timestamp Временная метка.
+ * @param[in] string Строка формата "ГГГГ.ММ.ДД-ЧЧ:ММ",
  * по которой будет сформирована временная метка.
  */
 void makeTimestamp(timestamp *timestamp, const char *string);
 
 /**
  * @brief Сделать временную метку пустой.
- * @param timestamp Указатель на временную метку,
+ * @param[out] timestamp Временная метка,
  * которую необходимо сделать пустой.
  */
 void makeVoidTimestamp(timestamp *timestamp);
 
 /**
  * @brief Определить, является ли временная метка пустой.
- * @param timestamp Указатель на проверяемую временную метку.
+ * @param[in] timestamp Проверяемая временная метка.
  * @retval true - временная метка является пустой.
  * @retval false - временная метка не является пустой.
  */
@@ -109,8 +109,8 @@ bool isVoidTimestamp(const timestamp *timestamp);
 
 /**
  * @brief Сравнить хронологически две временные метки.
- * @param first Первая временная метка.
- * @param second Вторая временная метка.
+ * @param[in] first Первая временная метка.
+ * @param[in] second Вторая временная метка.
  * @retval Отрицательное число, если first < second.
  * @retval Нуль, если first = second.
  * @retval Положительное число, если first > second.
@@ -119,8 +119,8 @@ int cmpTimestamps(const timestamp *first, const timestamp *second);
 
 /**
  * @brief Проверить, входит ли метка sub во временную область, заданную меткой base.
- * @param base Указатель на временную метку, определяющую временную область.
- * @param sub Указатель на временную метку, вхождение которой необходимо проверить.
+ * @param[in] base Временная метка, определяющая временную область.
+ * @param[in] sub Временная метка, вхождение которой необходимо проверить.
  * @retval true - метка sub входит во временную область метки base.
  * @retval false - метка sub не входит во временную область метки base.
  */
@@ -129,7 +129,7 @@ bool isSubTimestamp(const timestamp *base, const timestamp *sub);
 /**
  * @brief Вывести в консоль временную метку.
  * @details Выводит только достоверные компоненты временной метки.
- * @param timestamp Указатель на временную метку для вывода.
+ * @param[in] timestamp Временная метка для вывода.
  */
 void printTimestamp(const timestamp *timestamp);
 

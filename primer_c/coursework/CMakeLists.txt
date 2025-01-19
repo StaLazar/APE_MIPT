@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.25.0)
-project(coursework VERSION 0.1.0 LANGUAGES C)
+project(coursework VERSION 1.0.0 LANGUAGES C)
 
 set(APPS_SOURCE_DIR ${PROJECT_SOURCE_DIR}/apps)
 set(COMMON_SOURCE_DIR ${PROJECT_SOURCE_DIR}/common)

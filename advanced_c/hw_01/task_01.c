@@ -24,7 +24,6 @@ int main(void) {
     uint32_t result = (num >> shift) | (num << (numSize - shift));
 
     printf("Result of cyclic shift: %u\n", result);
-    printf("%u\n", result);
 
     return 0;
 }

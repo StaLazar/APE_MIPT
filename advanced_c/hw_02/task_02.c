@@ -12,24 +12,20 @@ typedef struct list {
 } list;
 
 /**
- * @brief Получить адрес наибольшего по размеру блока памяти.
+ * @brief Получить суммарный размер памяти, занятый односвязным списком.
  * @param head Указатель на первый элемент односвязного списка.
- * @return Адрес наибольшего по размеру блока памяти, если в списке
- * есть элементы, а иначе - 0.
+ * @return Суммарный размер памяти, занятый односвязным списком, если
+ * в нем есть элементы, а иначе - 0.
  */
-uint64_t findMaxBlock(list *head) {
+size_t totalMemoryUsage(list *head) {
     if (head == NULL) {
         return 0U;
     }
-    size_t max = 0UL;
-    uint64_t address = 0U;
+    size_t totalSize = 0UL;
     for (list *ptr = head; ptr != NULL; ptr = ptr->next) {
-        if (ptr->size > max) {
-            max = ptr->size;
-            address = ptr->address;
-        }
+        totalSize += ptr->size;
     }
-    return address;
+    return totalSize;
 }
 
 int main(void) {
@@ -38,7 +34,7 @@ int main(void) {
     list firstNode = {140525067852900U, 100UL, "First", &secondNode};
 
     list *head = &firstNode;
-    printf("Max block's address: %ld\n", findMaxBlock(head));
+    printf("Total memory usage: %ld\n", totalMemoryUsage(head));
 
     return 0;
 }

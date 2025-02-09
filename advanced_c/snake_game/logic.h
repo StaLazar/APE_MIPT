@@ -3,6 +3,7 @@
 // #include "properties.h"
 
 #include <stdio.h>
+#include <stdbool.h>
 
 /**
  * @brief Направление движения.

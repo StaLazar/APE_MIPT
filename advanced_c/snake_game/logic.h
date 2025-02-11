@@ -1,6 +1,6 @@
 #pragma once
 
-// #include "properties.h"
+#include "properties.h"
 
 #include <stdio.h>
 #include <stdbool.h>
@@ -19,8 +19,8 @@ typedef enum direction {
  * @brief Пара чисел типа int.
  */
 typedef struct pair_int {
-    int x; //!< Первое число пары.
-    int y; //!< Второе число пары.
+    int y; //!< Первое число пары.
+    int x; //!< Второе число пары.
 } pair_int;
 
 /**
@@ -54,7 +54,7 @@ typedef struct snake_tail {
  */
 typedef struct snake {
     snake_head head; //!< Голова.
-    snake_tail *tail; //!< Хвост.
+    snake_tail tail[MAX_TAIL_SIZE]; //!< Хвост.
     size_t tailSize; //!< Текущий размер хвоста.
     bool isInitialized; //!< Флаг инициализации.
 } snake;
@@ -63,28 +63,30 @@ typedef struct snake {
  * @brief Инициализировать змейку.
  * @details В случае успешной инициализации змейки устанавливает
  * соответствующий флаг в true, а иначе - в false.
- * @param snake Змейка для инициализации.
+ * @param[out] snake Змейка для инициализации.
  */
 void initSnake(snake *snake);
 
 /**
  * @brief Установить направление движения змейки.
  * @details Устанавливает направление движения головы змейки.
- * @param snake Змейка, направление движения которой необходимо установить.
- * @param direction Новое направление движения змейки.
+ * @param[out] snake Змейка, направление движения которой необходимо установить.
+ * @param[in] direction Новое направление движения змейки.
  */
 void setSnakeDirection(snake *snake, direction direction);
 
 /**
  * @brief Переместить змейку.
+ * @todo Добавить возврат флага о том, что змейка врезалась в себя же?
+ * Или не возврат флага, а изменение переменной, переданной через указатель.
  * @details Сдвигает голову змейки в направлении ее движения
  * и "подтягивает" вслед за ней весь хвост.
- * @param snake Змейка для перемещения.
+ * @param[out] snake Змейка для перемещения.
  */
 void moveSnake(snake *snake);
 
 /**
  * @brief Отрисовать змейку.
- * @param snake Змейка для отрисовки.
+ * @param[in] snake Змейка для отрисовки.
  */
 void drawSnake(const snake *snake);

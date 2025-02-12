@@ -5,6 +5,10 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+// ********************************************************************************* //
+// ************************************ ЗМЕЙКА ************************************* //
+// ********************************************************************************* //
+
 /**
  * @brief Направление движения.
  */
@@ -52,12 +56,12 @@ typedef struct snake_tail {
 /**
  * @brief Змейка.
  */
-typedef struct snake {
+typedef struct snake_type {
     snake_head head; //!< Голова.
     snake_tail tail[MAX_TAIL_SIZE]; //!< Хвост.
     size_t tailSize; //!< Текущий размер хвоста.
     bool isInitialized; //!< Флаг инициализации.
-} snake;
+} snake_type;
 
 /**
  * @brief Инициализировать змейку.
@@ -65,7 +69,7 @@ typedef struct snake {
  * соответствующий флаг в true, а иначе - в false.
  * @param[out] snake Змейка для инициализации.
  */
-void initSnake(snake *snake);
+void initSnake(snake_type *snake);
 
 /**
  * @brief Установить направление движения змейки.
@@ -73,7 +77,7 @@ void initSnake(snake *snake);
  * @param[out] snake Змейка, направление движения которой необходимо установить.
  * @param[in] direction Новое направление движения змейки.
  */
-void setSnakeDirection(snake *snake, direction direction);
+void setSnakeDirection(snake_type *snake, direction direction);
 
 /**
  * @brief Переместить змейку.
@@ -83,10 +87,24 @@ void setSnakeDirection(snake *snake, direction direction);
  * и "подтягивает" вслед за ней весь хвост.
  * @param[out] snake Змейка для перемещения.
  */
-void moveSnake(snake *snake);
+void moveSnake(snake_type *snake);
 
 /**
  * @brief Отрисовать змейку.
  * @param[in] snake Змейка для отрисовки.
  */
-void drawSnake(const snake *snake);
+void drawSnake(const snake_type *snake);
+
+// ********************************************************************************* //
+// ******************************** ОКНО ПРИЛОЖЕНИЯ ******************************** //
+// ********************************************************************************* //
+
+/**
+ * @brief Инициализировать окно приложения.
+ */
+void initWindow();
+
+/**
+ * @brief Закрыть окно приложения.
+ */
+void closeWindow();

@@ -7,27 +7,6 @@
 #include <ncurses.h>
 
 /**
- * @brief Выполнить одну итерацию обновления логики.
- * @param snake Змейка, состояние которой будет обновлено.
- */
-void update(snake_type *snake) {
-    const int pressedKey = getch();
-
-    direction way = getDirectionByKey(pressedKey);
-    setSnakeDirection(snake, way);
-    moveSnake(snake);
-}
-
-/**
- * @brief Выполнить одну итерацию рисования.
- * @param snake Змейка для отрисовки.
- */
-void draw(const snake_type *snake) {
-    drawSnake(snake);
-    refresh();
-}
-
-/**
  * @brief Основная функция приложения.
  * @retval 0 Приложение завершило работу в штатном режиме.
  * @retval 1 Приложение завершило работу с ошибкой инициализации змейки.

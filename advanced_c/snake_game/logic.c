@@ -119,3 +119,16 @@ direction getDirectionByKey(const int key) {
 
     return direction_unknown;
 }
+
+void update(snake_type *snake) {
+    const int pressedKey = getch();
+
+    direction way = getDirectionByKey(pressedKey);
+    setSnakeDirection(snake, way);
+    moveSnake(snake);
+}
+
+void draw(const snake_type *snake) {
+    drawSnake(snake);
+    refresh();
+}

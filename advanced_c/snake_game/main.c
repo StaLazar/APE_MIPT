@@ -11,6 +11,10 @@
  * @param snake Змейка, состояние которой будет обновлено.
  */
 void update(snake_type *snake) {
+    const int pressedKey = getch();
+
+    direction way = getDirectionByKey(pressedKey);
+    setSnakeDirection(snake, way);
     moveSnake(snake);
 }
 

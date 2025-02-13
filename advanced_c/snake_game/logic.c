@@ -49,8 +49,18 @@ void initSnake(snake_type *snake) {
 }
 
 void setSnakeDirection(snake_type *snake, const direction direction) {
-    if ((direction != direction_left) && (direction != direction_right) &&
-            (direction != direction_up) && (direction != direction_down)) {
+    const bool invalidDirection =
+            (direction != direction_left) && (direction != direction_right) &&
+            (direction != direction_up) && (direction != direction_down);
+    if (invalidDirection) {
+        return;
+    }
+    const bool prohibitedDirection =
+            ((snake->head.direction == direction_left) && (direction == direction_right)) ||
+            ((snake->head.direction == direction_right) && (direction == direction_left)) ||
+            ((snake->head.direction == direction_up) && (direction == direction_down)) ||
+            ((snake->head.direction == direction_down) && (direction == direction_up));
+    if (prohibitedDirection) {
         return;
     }
     snake->head.direction = direction;
@@ -86,7 +96,7 @@ void moveSnake(snake_type *snake) {
 void drawSnake(const snake_type *snake) {
     for (size_t i = MAX_TAIL_SIZE; i > 0UL; --i) {
         mvprintw(snake->tail[i - 1UL].coords.y, snake->tail[i - 1UL].coords.x,
-            "%c", snake->tail[i - 1UL].body.symbol);
+                "%c", snake->tail[i - 1UL].body.symbol);
     }
 
     mvprintw(snake->head.coords.y, snake->head.coords.x, "%c", snake->head.body.symbol);

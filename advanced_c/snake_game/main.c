@@ -7,17 +7,29 @@
 #include <ncurses.h>
 
 /**
+ * @brief Макрос завершения игры.
+ * @param[out] ptr Указатель на объект, из-под которого нужно высвободить память.
+ */
+#define END_GAME(ptr) \
+    if ((ptr) != NULL) { \
+        free((ptr)); \
+        (ptr) = NULL; \
+    } \
+    closeWindow();
+
+/**
  * @brief Основная функция приложения.
  * @retval 0 Приложение завершило работу в штатном режиме.
  * @retval 1 Приложение завершило работу с ошибкой инициализации змейки.
  */
 int main() {
+    initWindow();
     snake_type *snake = (snake_type *) malloc(sizeof(snake_type));
     initSnake(snake);
     if (!snake->isInitialized) {
+        END_GAME(snake)
         return 1;
     }
-    initWindow();
 
     state status = state_process;
     clock_t iterBegin = clock();
@@ -32,9 +44,6 @@ int main() {
         iterBegin = clock();
     }
 
-    free(snake);
-    snake = NULL;
-    closeWindow();
-
+    END_GAME(snake)
     return 0;
 }

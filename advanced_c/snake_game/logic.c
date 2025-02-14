@@ -2,12 +2,6 @@
 
 #include <ncurses.h>
 
-//! Символ-заполнитель для головы змейки.
-#define BODY_HEAD '0'
-//! Символ-заполнитель для хвоста змейки.
-#define BODY_TAIL 'O'
-//! Пустой символ-заполнитель.
-#define BODY_IDLE ' '
 //! Количество направлений, доступных для выбора с помощью клавиш.
 #define DIR_WAYS 4UL
 //! Количество клавиш, определяющих одно и то же направление.
@@ -15,9 +9,9 @@
 
 /**
  * @brief Получить значение в пределах циклического диапазона.
- * @param value Оригинальное значение.
- * @param lower Нижняя граница диапазона.
- * @param upper Верхняя граница диапазона.
+ * @param[in] value Оригинальное значение.
+ * @param[in] lower Нижняя граница диапазона.
+ * @param[in] upper Верхняя граница диапазона.
  * @retval value Оригинальное значение находится в диапазоне.
  * @retval upper Оригинальное значение меньше нижней границы.
  * @retval lower Оригинальное значение больше верхней границы.
@@ -33,14 +27,14 @@ int clamp(const int value, const int lower, const int upper) {
 }
 
 void initSnake(snake_type *snake) {
-    snake->head.coords.y = (int)(MAX_TAIL_SIZE + 1UL);
-    snake->head.coords.x = (int)(MAX_TAIL_SIZE + 1UL);
+    snake->head.coords.y = (int)(START_COORD_Y);
+    snake->head.coords.x = (int)(START_COORD_X);
     snake->head.body.symbol = BODY_HEAD;
     snake->head.direction = direction_right;
 
     for (size_t i = 0UL; i < MAX_TAIL_SIZE; ++i) {
-        snake->tail[i].coords.y = (int)(MAX_TAIL_SIZE + 1UL);
-        snake->tail[i].coords.x = (int)(MAX_TAIL_SIZE - i);
+        snake->tail[i].coords.y = (int)(START_COORD_Y);
+        snake->tail[i].coords.x = (int)(START_COORD_X - 1UL - i);
         snake->tail[i].body.symbol = (i < MIN_TAIL_SIZE) ? BODY_TAIL : BODY_IDLE;
     }
 
@@ -93,6 +87,16 @@ void moveSnake(snake_type *snake) {
     }
 }
 
+bool isSnakeLooped(const snake_type *snake) {
+    for (size_t i = 0UL; i < snake->tailSize; ++i) {
+        if ((snake->head.coords.y == snake->tail[i].coords.y) &&
+                (snake->head.coords.x == snake->tail[i].coords.x)) {
+            return true;
+        }
+    }
+    return false;
+}
+
 void drawSnake(const snake_type *snake) {
     for (size_t i = MAX_TAIL_SIZE; i > 0UL; --i) {
         mvprintw(snake->tail[i - 1UL].coords.y, snake->tail[i - 1UL].coords.x,
@@ -115,6 +119,13 @@ void closeWindow() {
     endwin(); //!< Завершить ncurses-режим.
 }
 
+bool isExitKey(const int key) {
+    if (key == EXIT_KEY) {
+        return true;
+    }
+    return false;
+}
+
 direction getDirectionByKey(const int key) {
     static const int keys[DIR_WAYS][DIR_KEYS] =
         {{KEY_LEFT, 'A', 'a'}, {KEY_RIGHT, 'D', 'd'}, {KEY_UP, 'W', 'w'}, {KEY_DOWN, 'S', 's'}};
@@ -130,12 +141,32 @@ direction getDirectionByKey(const int key) {
     return direction_unknown;
 }
 
+bool isGameWon(const snake_type *snake) {
+    if (snake->tailSize == MAX_TAIL_SIZE) {
+        return true;
+    }
+    return false;
+}
+
+bool isGameLost(const snake_type *snake) {
+    return isSnakeLooped(snake);
+}
+
 state update(snake_type *snake) {
     const int pressedKey = getch();
+    if (isExitKey(pressedKey)) {
+        return state_exit;
+    }
 
-    direction way = getDirectionByKey(pressedKey);
-    setSnakeDirection(snake, way);
+    setSnakeDirection(snake, getDirectionByKey(pressedKey));
     moveSnake(snake);
+
+    if (isGameWon(snake)) {
+        return state_won;
+    }
+    if (isGameLost(snake)) {
+        return state_lost;
+    }
 
     return state_process;
 }

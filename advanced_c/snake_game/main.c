@@ -19,15 +19,15 @@ int main() {
     }
     initWindow();
 
+    state status = state_process;
     clock_t iterBegin = clock();
-    //! TODO: Позже скорректировать условие цикла.
-    while (true) {
+    while (status == state_process) {
         const clock_t iterNow = clock();
         const float iterDuration = ((float)(iterNow - iterBegin) / CLOCKS_PER_SEC);
         if (iterDuration < UPDATE_TIMEOUT_SEC) {
             continue;
         }
-        update(snake);
+        status = update(snake);
         draw(snake);
         iterBegin = clock();
     }

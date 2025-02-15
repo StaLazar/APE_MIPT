@@ -173,6 +173,18 @@ bool isGameLost(const snake_type *snake);
 state update(snake_type *snake);
 
 /**
+ * @brief Отрисовать границы игровой арены.
+ */
+void drawArena();
+
+/**
+ * @brief Отрисовать справку.
+ * @details Справка представляет собой перечень
+ * управляющих клавиш, доступных в игре.
+ */
+void drawManual();
+
+/**
  * @brief Выполнить одну итерацию рисования.
  * @param[in] snake Змейка для отрисовки.
  */

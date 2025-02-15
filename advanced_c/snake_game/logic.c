@@ -1,6 +1,7 @@
 #include "logic.h"
 
 #include <ncurses.h>
+#include <string.h>
 
 //! Количество направлений, доступных для выбора с помощью клавиш.
 #define DIR_WAYS 4UL
@@ -68,19 +69,20 @@ void moveSnake(snake_type *snake) {
     snake->tail[0].coords.y = snake->head.coords.y;
     snake->tail[0].coords.x = snake->head.coords.x;
 
-    static const int minY = 0, minX = 0;
+    const int minY = getbegy(stdscr) + ARENA_OFFSET_Y, minX = getbegx(stdscr) + ARENA_OFFSET_X;
+    const int maxY = getmaxy(stdscr) - ARENA_OFFSET_Y, maxX = getmaxx(stdscr) - ARENA_OFFSET_X;
     switch (snake->head.direction) {
         case direction_left:
-            snake->head.coords.x = clamp(--(snake->head.coords.x), minX, getmaxx(stdscr));
+            snake->head.coords.x = clamp(--(snake->head.coords.x), minX, maxX);
             break;
         case direction_right:
-            snake->head.coords.x = clamp(++(snake->head.coords.x), minX, getmaxx(stdscr));
+            snake->head.coords.x = clamp(++(snake->head.coords.x), minX, maxX);
             break;
         case direction_up:
-            snake->head.coords.y = clamp(--(snake->head.coords.y), minY, getmaxy(stdscr));
+            snake->head.coords.y = clamp(--(snake->head.coords.y), minY, maxY);
             break;
         case direction_down:
-            snake->head.coords.y = clamp(++(snake->head.coords.y), minY, getmaxy(stdscr));
+            snake->head.coords.y = clamp(++(snake->head.coords.y), minY, maxY);
             break;
         default:
             break;
@@ -171,7 +173,34 @@ state update(snake_type *snake) {
     return state_process;
 }
 
+void drawArena() {
+    const int minY = getbegy(stdscr) + ARENA_OFFSET_Y, minX = getbegx(stdscr) + ARENA_OFFSET_X;
+    const int maxY = getmaxy(stdscr) - ARENA_OFFSET_Y, maxX = getmaxx(stdscr) - ARENA_OFFSET_X;
+    move(minY, minX);
+    hline(ACS_HLINE, maxX - minX);
+    vline(ACS_VLINE, maxY - minY);
+    addch(ACS_ULCORNER);
+    move(minY, maxX);
+    vline(ACS_VLINE, maxY - minY);
+    addch(ACS_URCORNER);
+    move(maxY, minX);
+    hline(ACS_HLINE, maxX - minX);
+    addch(ACS_LLCORNER);
+    move(maxY, maxX);
+    addch(ACS_LRCORNER);
+}
+
+void drawManual() {
+    static const char *manStr = "WASD, ARROWS - Control. F10 - Exit.";
+    const int coordY = getmaxy(stdscr) - (ARENA_OFFSET_Y / 2);
+    const int coordX = (getmaxx(stdscr) / 2) - (strlen(manStr) / 2);
+
+    mvprintw(coordY, coordX, "%s", manStr);
+}
+
 void draw(const snake_type *snake) {
     drawSnake(snake);
+    drawArena();
+    drawManual();
     refresh();
 }

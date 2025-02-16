@@ -30,6 +30,8 @@ int main() {
         END_GAME(snake)
         return 1;
     }
+    fruits_type fruits;
+    initFruits(fruits);
 
     state status = state_process;
     clock_t iterBegin = clock();
@@ -39,8 +41,8 @@ int main() {
         if (iterDuration < UPDATE_TIMEOUT_SEC) {
             continue;
         }
-        status = update(snake);
-        draw(snake);
+        status = update(snake, fruits);
+        draw(snake, fruits);
         iterBegin = clock();
     }
 

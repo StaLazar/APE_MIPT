@@ -1,7 +1,8 @@
 #include "logic.h"
 
-#include <ncurses.h>
+#include <stdlib.h>
 #include <string.h>
+#include <ncurses.h>
 
 //! Количество направлений, доступных для выбора с помощью клавиш.
 #define DIR_WAYS 4UL
@@ -69,20 +70,22 @@ void moveSnake(snake_type *snake) {
     snake->tail[0].coords.y = snake->head.coords.y;
     snake->tail[0].coords.x = snake->head.coords.x;
 
-    const int minY = getbegy(stdscr) + ARENA_OFFSET_Y, minX = getbegx(stdscr) + ARENA_OFFSET_X;
-    const int maxY = getmaxy(stdscr) - ARENA_OFFSET_Y, maxX = getmaxx(stdscr) - ARENA_OFFSET_X;
     switch (snake->head.direction) {
         case direction_left:
-            snake->head.coords.x = clamp(--(snake->head.coords.x), minX, maxX);
+            snake->head.coords.x =
+                    clamp(--(snake->head.coords.x), ARENA_MIN_COORD_X, ARENA_MAX_COORD_X);
             break;
         case direction_right:
-            snake->head.coords.x = clamp(++(snake->head.coords.x), minX, maxX);
+            snake->head.coords.x =
+                    clamp(++(snake->head.coords.x), ARENA_MIN_COORD_X, ARENA_MAX_COORD_X);
             break;
         case direction_up:
-            snake->head.coords.y = clamp(--(snake->head.coords.y), minY, maxY);
+            snake->head.coords.y =
+                    clamp(--(snake->head.coords.y), ARENA_MIN_COORD_Y, ARENA_MAX_COORD_Y);
             break;
         case direction_down:
-            snake->head.coords.y = clamp(++(snake->head.coords.y), minY, maxY);
+            snake->head.coords.y =
+                    clamp(++(snake->head.coords.y), ARENA_MIN_COORD_Y, ARENA_MAX_COORD_Y);
             break;
         default:
             break;
@@ -106,6 +109,43 @@ void drawSnake(const snake_type *snake) {
     }
 
     mvprintw(snake->head.coords.y, snake->head.coords.x, "%c", snake->head.body.symbol);
+}
+
+void initFruits(fruits_type fruits) {
+    for (size_t i = 0UL; i < MAX_FRUITS_AMOUNT; ++i) {
+        fruits[i].coords.y = ARENA_MIN_COORD_Y + 1;
+        fruits[i].coords.x = ARENA_MIN_COORD_X + 1;
+        fruits[i].body.symbol = BODY_IDLE;
+        fruits[i].placementTime = 0L;
+        fruits[i].isPlaced = false;
+    }
+}
+
+void updateFruits(fruits_type fruits) {
+    const clock_t now = clock();
+    for (size_t i = 0UL; i < MAX_FRUITS_AMOUNT; ++i) {
+        if (fruits[i].isPlaced) {
+            const float duration = ((float)(now - fruits[i].placementTime) / CLOCKS_PER_SEC);
+            if (duration > FRUIT_LIFE_TIMEOUT_SEC) {
+                fruits[i].body.symbol = BODY_IDLE;
+                fruits[i].isPlaced = false;
+            }
+        } else {
+            fruits[i].coords.y = (ARENA_MIN_COORD_Y + 1) +
+                    (rand() % (ARENA_MAX_COORD_Y - ARENA_MIN_COORD_Y - 1));
+            fruits[i].coords.x = (ARENA_MIN_COORD_X + 1) +
+                    (rand() % (ARENA_MAX_COORD_X - ARENA_MIN_COORD_X - 1));
+            fruits[i].body.symbol = BODY_FRUIT;
+            fruits[i].placementTime = now;
+            fruits[i].isPlaced = true;
+        }
+    }
+}
+
+void drawFruits(const fruits_type fruits) {
+    for (size_t i = 0UL; i < MAX_FRUITS_AMOUNT; ++i) {
+        mvprintw(fruits[i].coords.y, fruits[i].coords.x, "%c", fruits[i].body.symbol);
+    }
 }
 
 void initWindow() {
@@ -154,7 +194,7 @@ bool isGameLost(const snake_type *snake) {
     return isSnakeLooped(snake);
 }
 
-state update(snake_type *snake) {
+state update(snake_type *snake, fruits_type fruits) {
     const int pressedKey = getch();
     if (isExitKey(pressedKey)) {
         return state_exit;
@@ -162,6 +202,7 @@ state update(snake_type *snake) {
 
     setSnakeDirection(snake, getDirectionByKey(pressedKey));
     moveSnake(snake);
+    updateFruits(fruits);
 
     if (isGameWon(snake)) {
         return state_won;
@@ -174,19 +215,17 @@ state update(snake_type *snake) {
 }
 
 void drawArena() {
-    const int minY = getbegy(stdscr) + ARENA_OFFSET_Y, minX = getbegx(stdscr) + ARENA_OFFSET_X;
-    const int maxY = getmaxy(stdscr) - ARENA_OFFSET_Y, maxX = getmaxx(stdscr) - ARENA_OFFSET_X;
-    move(minY, minX);
-    hline(ACS_HLINE, maxX - minX);
-    vline(ACS_VLINE, maxY - minY);
+    move(ARENA_MIN_COORD_Y, ARENA_MIN_COORD_X);
+    hline(ACS_HLINE, ARENA_MAX_COORD_X - ARENA_MIN_COORD_X);
+    vline(ACS_VLINE, ARENA_MAX_COORD_Y - ARENA_MIN_COORD_Y);
     addch(ACS_ULCORNER);
-    move(minY, maxX);
-    vline(ACS_VLINE, maxY - minY);
+    move(ARENA_MIN_COORD_Y, ARENA_MAX_COORD_X);
+    vline(ACS_VLINE, ARENA_MAX_COORD_Y - ARENA_MIN_COORD_Y);
     addch(ACS_URCORNER);
-    move(maxY, minX);
-    hline(ACS_HLINE, maxX - minX);
+    move(ARENA_MAX_COORD_Y, ARENA_MIN_COORD_X);
+    hline(ACS_HLINE, ARENA_MAX_COORD_X - ARENA_MIN_COORD_X);
     addch(ACS_LLCORNER);
-    move(maxY, maxX);
+    move(ARENA_MAX_COORD_Y, ARENA_MAX_COORD_X);
     addch(ACS_LRCORNER);
 }
 
@@ -198,7 +237,8 @@ void drawManual() {
     mvprintw(coordY, coordX, "%s", manStr);
 }
 
-void draw(const snake_type *snake) {
+void draw(const snake_type *snake, const fruits_type fruits) {
+    drawFruits(fruits);
     drawSnake(snake);
     drawArena();
     drawManual();

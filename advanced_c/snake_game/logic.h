@@ -204,6 +204,15 @@ bool isGameWon(const snake_type *snake);
 bool isGameLost(const snake_type *snake);
 
 /**
+ * @brief Проверить, какие фрукты были съедены змейкой.
+ * Каждый съеденный фрукт пропадает с поля, при этом
+ * хвост змейки увеличивается на единицу.
+ * @param[out] snake Змейка, поедание фруктов которой будет проверено.
+ * @param[out] fruits Массив фруктов для проверки.
+ */
+void checkEatenFruits(snake_type *snake, fruits_type fruits);
+
+/**
  * @brief Выполнить одну итерацию обновления логики.
  * @param[out] snake Змейка, состояние которой будет обновлено.
  * @param[out] fruits Массив фруктов.

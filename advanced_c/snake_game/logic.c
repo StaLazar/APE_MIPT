@@ -194,6 +194,17 @@ bool isGameLost(const snake_type *snake) {
     return isSnakeLooped(snake);
 }
 
+void checkEatenFruits(snake_type *snake, fruits_type fruits) {
+    for (size_t i = 0UL; i < MAX_FRUITS_AMOUNT; ++i) {
+        if (fruits[i].isPlaced && (fruits[i].coords.y == snake->head.coords.y) &&
+                (fruits[i].coords.x == snake->head.coords.x)) {
+            fruits[i].body.symbol = BODY_IDLE;
+            fruits[i].isPlaced = false;
+            snake->tail[snake->tailSize++].body.symbol = BODY_TAIL;
+        }
+    }
+}
+
 state update(snake_type *snake, fruits_type fruits) {
     const int pressedKey = getch();
     if (isExitKey(pressedKey)) {
@@ -203,6 +214,7 @@ state update(snake_type *snake, fruits_type fruits) {
     setSnakeDirection(snake, getDirectionByKey(pressedKey));
     moveSnake(snake);
     updateFruits(fruits);
+    checkEatenFruits(snake, fruits);
 
     if (isGameWon(snake)) {
         return state_won;

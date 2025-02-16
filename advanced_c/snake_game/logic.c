@@ -281,7 +281,6 @@ void drawResult(const state status) {
 
     clear();
     mvprintw(resultCoordY, resultCoordX, "%s", resultStr);
-    drawArena();
     refresh();
 
     //! Приостановить программу на время прочтения сообщения:

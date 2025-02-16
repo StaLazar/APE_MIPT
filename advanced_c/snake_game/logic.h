@@ -226,11 +226,12 @@ state update(snake_type *snake, fruits_type fruits);
 void drawArena();
 
 /**
- * @brief Отрисовать справку.
- * @details Справка представляет собой перечень
- * управляющих клавиш, доступных в игре.
+ * @brief Отрисовать легенду игры.
+ * @details Легенда игры состоит из следующих элементов:
+ * прогресс, справка по управляющим клавишам.
+ * @param[in] snake Змейка, определяющая прогресс игры.
  */
-void drawManual();
+void drawLegend(const snake_type *snake);
 
 /**
  * @brief Выполнить одну итерацию рисования.

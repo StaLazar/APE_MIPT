@@ -241,18 +241,24 @@ void drawArena() {
     addch(ACS_LRCORNER);
 }
 
-void drawManual() {
+void drawLegend(const snake_type *snake) {
     static const char *manStr = "WASD, ARROWS - Control. F10 - Exit.";
-    const int coordY = getmaxy(stdscr) - (ARENA_OFFSET_Y / 2);
-    const int coordX = (getmaxx(stdscr) / 2) - (strlen(manStr) / 2);
+    const int manCoordY = getmaxy(stdscr) - (ARENA_OFFSET_Y / 2);
+    const int manCoordX = (getmaxx(stdscr) / 2) - (strlen(manStr) / 2);
 
-    mvprintw(coordY, coordX, "%s", manStr);
+    static const char *progressStr = "Current tail size: %d/%d. Eat %d fruit(s) to win.";
+    const int progressCoordY = getbegy(stdscr) + (ARENA_OFFSET_Y / 2);
+    const int progressCoordX = (getmaxx(stdscr) / 2) - (strlen(progressStr) / 2);
+
+    mvprintw(manCoordY, manCoordX, "%s", manStr);
+    mvprintw(progressCoordY, progressCoordX, progressStr,
+            snake->tailSize, MAX_TAIL_SIZE, MAX_TAIL_SIZE - snake->tailSize);
 }
 
 void draw(const snake_type *snake, const fruits_type fruits) {
     drawFruits(fruits);
     drawSnake(snake);
     drawArena();
-    drawManual();
+    drawLegend(snake);
     refresh();
 }

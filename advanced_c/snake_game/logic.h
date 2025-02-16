@@ -242,6 +242,6 @@ void draw(const snake_type *snake, const fruits_type fruits);
 
 /**
  * @brief Вывести на экран результат игры.
- * @param status Состояние игры.
+ * @param[in] status Состояние игры.
  */
 void drawResult(const state status);

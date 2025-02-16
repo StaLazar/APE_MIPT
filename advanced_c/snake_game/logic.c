@@ -8,6 +8,8 @@
 #define DIR_WAYS 4UL
 //! Количество клавиш, определяющих одно и то же направление.
 #define DIR_KEYS 3UL
+//! Время отображения сообщения с результатом игры.
+#define RESULT_TIMEOUT_SEC 3.F
 
 /**
  * @brief Получить значение в пределах циклического диапазона.
@@ -261,4 +263,32 @@ void draw(const snake_type *snake, const fruits_type fruits) {
     drawArena();
     drawLegend(snake);
     refresh();
+}
+
+void drawResult(const state status) {
+    const clock_t resBegin = clock();
+
+    const char *resultStr = "Something went wrong...";
+    if (status == state_exit) {
+        resultStr = "You have exited the game!";
+    } else if (status == state_won) {
+        resultStr = "You have won the game!";
+    } else if (status == state_lost) {
+        resultStr = "You have lost the game!";
+    }
+    const int resultCoordY = getmaxy(stdscr) / 2;
+    const int resultCoordX = (getmaxx(stdscr) / 2) - (strlen(resultStr) / 2);
+
+    clear();
+    mvprintw(resultCoordY, resultCoordX, "%s", resultStr);
+    drawArena();
+    refresh();
+
+    //! Приостановить программу на время прочтения сообщения:
+    while (true) {
+        const float resDuration = ((float)(clock() - resBegin) / CLOCKS_PER_SEC);
+        if (resDuration >= RESULT_TIMEOUT_SEC) {
+            return;
+        }
+    }
 }

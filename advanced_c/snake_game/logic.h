@@ -239,3 +239,9 @@ void drawLegend(const snake_type *snake);
  * @param[in] fruits Массив фруктов для отрисовки.
  */
 void draw(const snake_type *snake, const fruits_type fruits);
+
+/**
+ * @brief Вывести на экран результат игры.
+ * @param status Состояние игры.
+ */
+void drawResult(const state status);

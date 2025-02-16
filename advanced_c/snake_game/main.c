@@ -27,6 +27,7 @@ int main() {
     snake_type *snake = (snake_type *) malloc(sizeof(snake_type));
     initSnake(snake);
     if (!snake->isInitialized) {
+        drawResult(state_unknown);
         END_GAME(snake)
         return 1;
     }
@@ -46,6 +47,7 @@ int main() {
         iterBegin = clock();
     }
 
+    drawResult(status);
     END_GAME(snake)
     return 0;
 }

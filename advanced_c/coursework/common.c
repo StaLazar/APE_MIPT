@@ -1,8 +1,14 @@
 #include "common.h"
+#include <stdio.h>
+#include "math.h"
 
 float_pair rootScopes[ROOTS_COUNT] = {
     {-7.F, -5.F}, {-1.F, 0.F}, {0.F, 1.F}, {3.F, 3.5F}, {3.5F, 4.F}
 };
+
+float getDifference(function *first, function *second, const float x) {
+    return first(x) - second(x);
+}
 
 float f(const float x) {
     return 0.6F * x + 3.F;

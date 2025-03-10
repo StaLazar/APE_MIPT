@@ -1,8 +1,5 @@
 #pragma once
 
-#include <stdio.h>
-#include "math.h"
-
 //! Число точек пересечения функций f(x), g(x), h(x).
 #define ROOTS_COUNT 5UL
 
@@ -14,16 +11,25 @@ typedef struct float_pair {
     float second; //!< Второе число пары.
 } float_pair;
 
-//! Окрестности абсцисс пересечения функций f(x), g(x), h(x).
+//! Окрестности абсцисс пересечения графиков функций f(x), g(x), h(x).
 extern float_pair rootScopes[ROOTS_COUNT];
 
-//! Точки пересечения функций f(x), g(x), h(x).
+//! Точки пересечения графиков функций f(x), g(x), h(x).
 extern float_pair roots[ROOTS_COUNT];
 
 /**
  * @brief Тип математической функции одной переменной.
  */
 typedef float (function)(float x);
+
+/**
+ * @brief Получить разницу функций first и second в точке x.
+ * @param first Математическая функция одной переменной.
+ * @param second Математическая функция одной переменной.
+ * @param x Аргумент функции.
+ * @return Искомая разница.
+ */
+float getDifference(function *first, function *second, float x);
 
 /**
  * @brief Линейная функция f(x).

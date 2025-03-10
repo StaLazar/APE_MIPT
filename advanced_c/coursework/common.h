@@ -24,23 +24,23 @@ typedef float (function)(float x);
 
 /**
  * @brief Получить разницу функций first и second в точке x.
- * @param first Математическая функция одной переменной.
- * @param second Математическая функция одной переменной.
- * @param x Аргумент функции.
+ * @param[in] first Математическая функция одной переменной.
+ * @param[in] second Математическая функция одной переменной.
+ * @param[in] x Аргумент функции.
  * @return Искомая разница.
  */
 float getDifference(function *first, function *second, float x);
 
 /**
  * @brief Линейная функция f(x).
- * @param x Аргумент функции.
+ * @param[in] x Аргумент функции.
  * @return Значение функции f(x).
  */
 float f(const float x);
 
 /**
  * @brief Кубическая функция g(x).
- * @param x Аргумент функции.
+ * @param[in] x Аргумент функции.
  * @return Значение функции g(x).
  */
 float g(const float x);
@@ -48,7 +48,7 @@ float g(const float x);
 /**
  * @brief Обратная пропорциональность h(x).
  * @attention Деление на 0 недопустимо.
- * @param x Аргумент функции.
+ * @param[in] x Аргумент функции.
  * @return Значение функции h(x), если x != 0,
  * иначе - 0.
  */

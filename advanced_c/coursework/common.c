@@ -3,8 +3,10 @@
 #include "math.h"
 
 float_pair rootScopes[ROOTS_COUNT] = {
-    {-7.F, -5.F}, {-1.F, 0.F}, {0.F, 1.F}, {3.F, 3.5F}, {3.5F, 4.F}
+    {-7.F, -5.F}, {-1.F, -0.1F}, {0.1F, 1.F}, {3.F, 3.5F}, {3.5F, 4.F}
 };
+
+float roots[ROOTS_COUNT] = {};
 
 float getDifference(function *first, function *second, const float x) {
     return first(x) - second(x);

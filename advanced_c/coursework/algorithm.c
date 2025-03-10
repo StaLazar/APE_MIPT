@@ -17,7 +17,6 @@ float getRoot(float_pair scope, function *first, function *second, const float p
 float getSquare(float_pair scope, function *upper, function *lower, const float precision) {
     const float height = (scope.second - scope.first) * precision;
     float square = 0.F;
-    // for (float x = scope.first + height; x < scope.second - height; x += height) {
     for (float x = scope.first; x < scope.second; x += height) {
         square += 0.5F * height *
             (getDifference(upper, lower, x) + getDifference(upper, lower, x + height));

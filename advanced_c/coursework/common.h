@@ -14,8 +14,8 @@ typedef struct float_pair {
 //! Окрестности абсцисс пересечения графиков функций f(x), g(x), h(x).
 extern float_pair rootScopes[ROOTS_COUNT];
 
-//! Точки пересечения графиков функций f(x), g(x), h(x).
-extern float_pair roots[ROOTS_COUNT];
+//! Абсциссы пересечения графиков функций f(x), g(x), h(x).
+extern float roots[ROOTS_COUNT];
 
 /**
  * @brief Тип математической функции одной переменной.

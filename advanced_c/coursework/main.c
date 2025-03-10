@@ -106,7 +106,7 @@ int main(int argc, char *argv[]) {
         }
         printf("\n\n");
     }
-    printf("\nThe square of the desired figure: %f\n", square);
+    printf("The square of the desired figure: %f\n", square);
 
     return 0;
 }
